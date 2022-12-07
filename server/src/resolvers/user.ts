@@ -6,6 +6,8 @@ import {
   Ctx,
   ObjectType,
   Query,
+  FieldResolver,
+  Root,
   // FieldResolver,
   // Root,
 } from "type-graphql";
@@ -39,14 +41,14 @@ class UserResponse {
 
 @Resolver(User)
 export class UserResolver {
-  // @FieldResolver(() => String)
-  // email(@Root() user: User, @Ctx() { req }: MyContext) {
-  //   if (req.session.userId === user._id) {
-  //     return user.email;
-  //   }
+  @FieldResolver(() => String)
+  email(@Root() user: User, @Ctx() { req }: MyContext) {
+    if (req.session.userEmail === user.email) {
+      return user.email;
+    }
 
-  //   return "";
-  // }
+    return "";
+  }
 
   @Mutation(() => UserResponse)
   async changePassword(
@@ -80,8 +82,11 @@ export class UserResolver {
     }
 
     let myUserId = userId;
+    console.log(userId);
 
-    const user = await User.findOne({ where: { _id: myUserId as any } });
+    const user = await User.findOne({ where: { email: myUserId as any } });
+
+    console.log(user);
 
     if (!user) {
       return {
@@ -107,7 +112,7 @@ export class UserResolver {
     }
 
     await User.update(
-      { _id: myUserId as any },
+      { _id: user._id as any },
       { password: await argon2.hash(newPassword) }
     );
 
@@ -134,7 +139,7 @@ export class UserResolver {
 
     await redis.set(
       `${FORGET_PASSWORD_PREFIX}${token}`,
-      user._id as any,
+      user.email as any,
       "EX",
       `${expireDate}`
     );
@@ -148,7 +153,7 @@ export class UserResolver {
     if (!req.session.userEmail) {
       return null;
     }
-    console.log(req.session.userEmail);
+
     return User.findOne({ where: { email: req.session.userEmail } });
   }
 

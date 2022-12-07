@@ -61,6 +61,12 @@ UserResponse = __decorate([
     (0, type_graphql_1.ObjectType)()
 ], UserResponse);
 let UserResolver = class UserResolver {
+    email(user, { req }) {
+        if (req.session.userEmail === user.email) {
+            return user.email;
+        }
+        return "";
+    }
     changePassword(token, newPassword, { redis, req }) {
         return __awaiter(this, void 0, void 0, function* () {
             if (newPassword.length <= 2) {
@@ -86,7 +92,9 @@ let UserResolver = class UserResolver {
                 };
             }
             let myUserId = userId;
-            const user = yield User_1.User.findOne({ where: { _id: myUserId } });
+            console.log(userId);
+            const user = yield User_1.User.findOne({ where: { email: myUserId } });
+            console.log(user);
             if (!user) {
                 return {
                     errors: [
@@ -108,7 +116,7 @@ let UserResolver = class UserResolver {
                     ],
                 };
             }
-            yield User_1.User.update({ _id: myUserId }, { password: yield argon2_1.default.hash(newPassword) });
+            yield User_1.User.update({ _id: user._id }, { password: yield argon2_1.default.hash(newPassword) });
             yield redis.del(redisKey);
             req.session.userId = user._id;
             return { user };
@@ -122,7 +130,7 @@ let UserResolver = class UserResolver {
             }
             let token = (0, uuid_1.v4)();
             let expireDate = 1000 * 60 * 60 * 24 * 3;
-            yield redis.set(`${constant_1.FORGET_PASSWORD_PREFIX}${token}`, user._id, "EX", `${expireDate}`);
+            yield redis.set(`${constant_1.FORGET_PASSWORD_PREFIX}${token}`, user.email, "EX", `${expireDate}`);
             const textMessage = `<a href="${process.env.CORS_ORIGIN}/change-password/${token}">reset password</a>`;
             yield (0, sendEmail_1.sendEmail)(email, textMessage);
             return true;
@@ -132,7 +140,6 @@ let UserResolver = class UserResolver {
         if (!req.session.userEmail) {
             return null;
         }
-        console.log(req.session.userEmail);
         return User_1.User.findOne({ where: { email: req.session.userEmail } });
     }
     register(options, { req }) {
@@ -226,6 +233,14 @@ let UserResolver = class UserResolver {
         }));
     }
 };
+__decorate([
+    (0, type_graphql_1.FieldResolver)(() => String),
+    __param(0, (0, type_graphql_1.Root)()),
+    __param(1, (0, type_graphql_1.Ctx)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [User_1.User, Object]),
+    __metadata("design:returntype", void 0)
+], UserResolver.prototype, "email", null);
 __decorate([
     (0, type_graphql_1.Mutation)(() => UserResponse),
     __param(0, (0, type_graphql_1.Arg)("token")),
