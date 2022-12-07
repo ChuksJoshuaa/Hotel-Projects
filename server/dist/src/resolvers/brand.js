@@ -60,14 +60,14 @@ let HotelBrandResolver = class HotelBrandResolver {
             return HotelBrand_1.HotelBrand.create(Object.assign(Object.assign({}, input), { authorId: authorUserId })).save();
         });
     }
-    updateBrand(id, name) {
+    updateBrand(_id, name) {
         return __awaiter(this, void 0, void 0, function* () {
-            const brand = yield HotelBrand_1.HotelBrand.findOne({ where: { _id: id } });
+            const brand = yield HotelBrand_1.HotelBrand.findOne({ where: { _id } });
             if (!brand) {
                 return null;
             }
             if (typeof name !== "undefined") {
-                yield HotelBrand_1.HotelBrand.update({ _id: id }, { name });
+                yield HotelBrand_1.HotelBrand.update(_id, { name });
             }
             return brand;
         });
@@ -106,7 +106,7 @@ __decorate([
 __decorate([
     (0, type_graphql_1.Mutation)(() => HotelBrand_1.HotelBrand, { nullable: true }),
     (0, type_graphql_1.UseMiddleware)(Authenticated_1.Authenticated),
-    __param(0, (0, type_graphql_1.Arg)("id", () => String)),
+    __param(0, (0, type_graphql_1.Arg)("_id", () => String)),
     __param(1, (0, type_graphql_1.Arg)("name", () => String, { nullable: true })),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, String]),
