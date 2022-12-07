@@ -10,13 +10,14 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import { Hotel } from "./Hotel";
+import { HotelBrand } from "./HotelBrand";
 
 @ObjectType()
 @Entity()
 export class User extends BaseEntity {
   @Field(() => String)
   @ObjectIdColumn()
-  id!: ObjectID;
+  _id!: ObjectID;
 
   @Field()
   @Column({ unique: true })
@@ -31,6 +32,9 @@ export class User extends BaseEntity {
 
   @OneToMany(() => Hotel, (hotel) => hotel.author)
   hotels: Hotel[];
+
+  @OneToMany(() => HotelBrand, (hotel) => hotel.author)
+  hotelbrands: HotelBrand[];
 
   @Field(() => String)
   @CreateDateColumn()

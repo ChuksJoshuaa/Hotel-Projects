@@ -62,7 +62,7 @@ UserResponse = __decorate([
 ], UserResponse);
 let UserResolver = class UserResolver {
     email(user, { req }) {
-        if (req.session.userEmail === user.email) {
+        if (req.session.userId === user._id) {
             return user.email;
         }
         return "";
@@ -92,7 +92,7 @@ let UserResolver = class UserResolver {
                 };
             }
             let myUserId = userId;
-            const user = yield User_1.User.findOne({ where: { email: myUserId } });
+            const user = yield User_1.User.findOne({ where: { _id: myUserId } });
             if (!user) {
                 return {
                     errors: [
@@ -114,9 +114,9 @@ let UserResolver = class UserResolver {
                     ],
                 };
             }
-            yield User_1.User.update({ email: myUserId }, { password: yield argon2_1.default.hash(newPassword) });
+            yield User_1.User.update({ _id: myUserId }, { password: yield argon2_1.default.hash(newPassword) });
             yield redis.del(redisKey);
-            req.session.userId = user.id;
+            req.session.userId = user._id;
             return { user };
         });
     }
@@ -128,17 +128,17 @@ let UserResolver = class UserResolver {
             }
             let token = (0, uuid_1.v4)();
             let expireDate = 1000 * 60 * 60 * 24 * 3;
-            yield redis.set(`${constant_1.FORGET_PASSWORD_PREFIX}${token}`, user.email, "EX", `${expireDate}`);
+            yield redis.set(`${constant_1.FORGET_PASSWORD_PREFIX}${token}`, user._id, "EX", `${expireDate}`);
             const textMessage = `<a href="${process.env.CORS_ORIGIN}/change-password/${token}">reset password</a>`;
             yield (0, sendEmail_1.sendEmail)(email, textMessage);
             return true;
         });
     }
     me({ req }) {
-        if (!req.session.userEmail) {
+        if (!req.session.userId) {
             return null;
         }
-        return User_1.User.findOne({ where: { email: req.session.userEmail } });
+        return User_1.User.findOne({ where: { _id: req.session.userId } });
     }
     register(options, { req }) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -170,8 +170,7 @@ let UserResolver = class UserResolver {
                 }
             }
             if (user) {
-                req.session.userId = user.id;
-                req.session.userEmail = user.email;
+                req.session.userId = user._id;
             }
             return {
                 user,
@@ -212,12 +211,7 @@ let UserResolver = class UserResolver {
                     ],
                 };
             }
-            if (user.id === undefined || user.id === null || !user.id) {
-                req.session.userEmail = user.email;
-            }
-            if (user.id !== undefined || user.id !== null || user.id) {
-                req.session.userId = user.id;
-            }
+            req.session.userId = user._id;
             return {
                 user,
             };

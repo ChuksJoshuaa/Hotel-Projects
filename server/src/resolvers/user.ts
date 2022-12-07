@@ -41,7 +41,7 @@ class UserResponse {
 export class UserResolver {
   @FieldResolver(() => String)
   email(@Root() user: User, @Ctx() { req }: MyContext) {
-    if (req.session.userEmail === user.email) {
+    if (req.session.userId === user._id) {
       return user.email;
     }
 
@@ -81,7 +81,7 @@ export class UserResolver {
 
     let myUserId = userId;
 
-    const user = await User.findOne({ where: { email: myUserId as any } });
+    const user = await User.findOne({ where: { _id: myUserId as any } });
 
     if (!user) {
       return {
@@ -107,13 +107,13 @@ export class UserResolver {
     }
 
     await User.update(
-      { email: myUserId as any },
+      { _id: myUserId as any },
       { password: await argon2.hash(newPassword) }
     );
 
     await redis.del(redisKey);
 
-    req.session.userId = user.id;
+    req.session.userId = user._id;
 
     return { user };
   }
@@ -134,7 +134,7 @@ export class UserResolver {
 
     await redis.set(
       `${FORGET_PASSWORD_PREFIX}${token}`,
-      user.email as any,
+      user._id as any,
       "EX",
       `${expireDate}`
     );
@@ -145,10 +145,10 @@ export class UserResolver {
 
   @Query(() => User, { nullable: true })
   me(@Ctx() { req }: MyContext) {
-    if (!req.session.userEmail) {
+    if (!req.session.userId) {
       return null;
     }
-    return User.findOne({ where: { email: req.session.userEmail } });
+    return User.findOne({ where: { _id: req.session.userId } });
   }
 
   @Mutation(() => UserResponse)
@@ -187,8 +187,7 @@ export class UserResolver {
     }
 
     if (user) {
-      req.session.userId = user.id;
-      req.session.userEmail = user.email;
+      req.session.userId = user._id;
     }
 
     return {
@@ -240,13 +239,7 @@ export class UserResolver {
       };
     }
 
-    if (user.id === undefined || user.id === null || !user.id) {
-      req.session.userEmail = user.email;
-    }
-
-    if (user.id !== undefined || user.id !== null || user.id) {
-      req.session.userId = user.id;
-    }
+    req.session.userId = user._id;
 
     return {
       user,
