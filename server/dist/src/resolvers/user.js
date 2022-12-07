@@ -61,12 +61,6 @@ UserResponse = __decorate([
     (0, type_graphql_1.ObjectType)()
 ], UserResponse);
 let UserResolver = class UserResolver {
-    email(user, { req }) {
-        if (req.session.userId === user._id) {
-            return user.email;
-        }
-        return "";
-    }
     changePassword(token, newPassword, { redis, req }) {
         return __awaiter(this, void 0, void 0, function* () {
             if (newPassword.length <= 2) {
@@ -135,10 +129,11 @@ let UserResolver = class UserResolver {
         });
     }
     me({ req }) {
-        if (!req.session.userId) {
+        if (!req.session.userEmail) {
             return null;
         }
-        return User_1.User.findOne({ where: { _id: req.session.userId } });
+        console.log(req.session.userEmail);
+        return User_1.User.findOne({ where: { email: req.session.userEmail } });
     }
     register(options, { req }) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -171,6 +166,7 @@ let UserResolver = class UserResolver {
             }
             if (user) {
                 req.session.userId = user._id;
+                req.session.userEmail = user.email;
             }
             return {
                 user,
@@ -212,6 +208,7 @@ let UserResolver = class UserResolver {
                 };
             }
             req.session.userId = user._id;
+            req.session.userEmail = user.email;
             return {
                 user,
             };
@@ -229,14 +226,6 @@ let UserResolver = class UserResolver {
         }));
     }
 };
-__decorate([
-    (0, type_graphql_1.FieldResolver)(() => String),
-    __param(0, (0, type_graphql_1.Root)()),
-    __param(1, (0, type_graphql_1.Ctx)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [User_1.User, Object]),
-    __metadata("design:returntype", void 0)
-], UserResolver.prototype, "email", null);
 __decorate([
     (0, type_graphql_1.Mutation)(() => UserResponse),
     __param(0, (0, type_graphql_1.Arg)("token")),

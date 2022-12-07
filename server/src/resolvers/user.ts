@@ -6,8 +6,8 @@ import {
   Ctx,
   ObjectType,
   Query,
-  FieldResolver,
-  Root,
+  // FieldResolver,
+  // Root,
 } from "type-graphql";
 import { MyContext } from "../types";
 import { User } from "../entities/User";
@@ -39,14 +39,14 @@ class UserResponse {
 
 @Resolver(User)
 export class UserResolver {
-  @FieldResolver(() => String)
-  email(@Root() user: User, @Ctx() { req }: MyContext) {
-    if (req.session.userId === user._id) {
-      return user.email;
-    }
+  // @FieldResolver(() => String)
+  // email(@Root() user: User, @Ctx() { req }: MyContext) {
+  //   if (req.session.userId === user._id) {
+  //     return user.email;
+  //   }
 
-    return "";
-  }
+  //   return "";
+  // }
 
   @Mutation(() => UserResponse)
   async changePassword(
@@ -145,10 +145,11 @@ export class UserResolver {
 
   @Query(() => User, { nullable: true })
   me(@Ctx() { req }: MyContext) {
-    if (!req.session.userId) {
+    if (!req.session.userEmail) {
       return null;
     }
-    return User.findOne({ where: { _id: req.session.userId } });
+    console.log(req.session.userEmail);
+    return User.findOne({ where: { email: req.session.userEmail } });
   }
 
   @Mutation(() => UserResponse)
@@ -188,6 +189,7 @@ export class UserResolver {
 
     if (user) {
       req.session.userId = user._id;
+      req.session.userEmail = user.email;
     }
 
     return {
@@ -240,6 +242,7 @@ export class UserResolver {
     }
 
     req.session.userId = user._id;
+    req.session.userEmail = user.email;
 
     return {
       user,
