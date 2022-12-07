@@ -82,11 +82,8 @@ export class UserResolver {
     }
 
     let myUserId = userId;
-    console.log(userId);
 
     const user = await User.findOne({ where: { email: myUserId as any } });
-
-    console.log(user);
 
     if (!user) {
       return {

@@ -92,9 +92,7 @@ let UserResolver = class UserResolver {
                 };
             }
             let myUserId = userId;
-            console.log(userId);
             const user = yield User_1.User.findOne({ where: { email: myUserId } });
-            console.log(user);
             if (!user) {
                 return {
                     errors: [
