@@ -109,7 +109,7 @@ __decorate([
     __param(0, (0, type_graphql_1.Arg)("id", () => String)),
     __param(1, (0, type_graphql_1.Arg)("name", () => String, { nullable: true })),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeorm_1.ObjectID, String]),
+    __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", Promise)
 ], HotelBrandResolver.prototype, "updateBrand", null);
 __decorate([

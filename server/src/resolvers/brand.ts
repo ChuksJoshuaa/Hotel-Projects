@@ -64,15 +64,15 @@ export class HotelBrandResolver {
   @Mutation(() => HotelBrand, { nullable: true })
   @UseMiddleware(Authenticated)
   async updateBrand(
-    @Arg("id", () => String) id: ObjectID,
+    @Arg("id", () => String) id: string,
     @Arg("name", () => String, { nullable: true }) name: string
   ): Promise<HotelBrand | null> {
-    const brand = await HotelBrand.findOne({ where: { _id: id } });
+    const brand = await HotelBrand.findOne({ where: { _id: id as any } });
     if (!brand) {
       return null;
     }
     if (typeof name !== "undefined") {
-      await HotelBrand.update({ _id: id }, { name });
+      await HotelBrand.update({ _id: id as any }, { name });
     }
 
     return brand;
