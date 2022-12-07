@@ -8,6 +8,7 @@ import {
   UpdateDateColumn,
   ManyToOne,
   ObjectID,
+  Any,
 } from "typeorm";
 import { HotelBrand } from "./HotelBrand";
 
@@ -16,7 +17,7 @@ import { User } from "./User";
 @ObjectType()
 @Entity()
 export class Hotel extends BaseEntity {
-  @Field()
+  @Field(() => String)
   @ObjectIdColumn()
   id!: ObjectID;
 
@@ -46,17 +47,17 @@ export class Hotel extends BaseEntity {
 
   @Field()
   @Column()
-  authorId: number;
+  authorId: string;
 
-  @Field()
+  @Field(() => Any)
   @ManyToOne(() => User, (user) => user.hotels)
   author!: User;
 
   @Field()
   @Column()
-  brandId: number;
+  brandId: string;
 
-  @Field()
+  @Field(() => Any)
   @ManyToOne(() => HotelBrand, (item) => item.brands)
   brand!: HotelBrand;
 
