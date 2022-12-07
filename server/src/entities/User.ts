@@ -14,7 +14,7 @@ import { Hotel } from "./Hotel";
 @ObjectType()
 @Entity()
 export class User extends BaseEntity {
-  @Field()
+  @Field(() => String)
   @ObjectIdColumn()
   id!: ObjectID;
 

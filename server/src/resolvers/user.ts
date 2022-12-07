@@ -18,7 +18,6 @@ import { validateRegister } from "../../utils/validateRegister";
 import { UserPasswordInput } from "../../utils/UserPasswordInput";
 import { sendEmail } from "../../utils/sendEmail";
 import { v4 } from "uuid";
-import { dataSource } from "../appDataSource";
 
 @ObjectType()
 class FieldError {
@@ -42,7 +41,7 @@ class UserResponse {
 export class UserResolver {
   @FieldResolver(() => String)
   email(@Root() user: User, @Ctx() { req }: MyContext) {
-    if (req.session.userId === user.id) {
+    if (req.session.userEmail === user.email) {
       return user.email;
     }
 
@@ -80,9 +79,9 @@ export class UserResolver {
       };
     }
 
-    let myUserId = parseInt(userId);
+    let myUserId = userId;
 
-    const user = await User.findOne({ where: { id: myUserId as any } });
+    const user = await User.findOne({ where: { email: myUserId as any } });
 
     if (!user) {
       return {
@@ -108,7 +107,7 @@ export class UserResolver {
     }
 
     await User.update(
-      { id: myUserId as any },
+      { email: myUserId as any },
       { password: await argon2.hash(newPassword) }
     );
 
@@ -135,7 +134,7 @@ export class UserResolver {
 
     await redis.set(
       `${FORGET_PASSWORD_PREFIX}${token}`,
-      user.id as any,
+      user.email as any,
       "EX",
       `${expireDate}`
     );
@@ -146,11 +145,10 @@ export class UserResolver {
 
   @Query(() => User, { nullable: true })
   me(@Ctx() { req }: MyContext) {
-    if (!req.session.userId) {
+    if (!req.session.userEmail) {
       return null;
     }
-
-    return User.findOne({ where: { id: req.session.userId } });
+    return User.findOne({ where: { email: req.session.userEmail } });
   }
 
   @Mutation(() => UserResponse)
@@ -167,22 +165,16 @@ export class UserResolver {
     let user;
 
     try {
-      const result = await dataSource
-        .createQueryBuilder()
-        .insert()
-        .into(User)
-        .values({
-          username: options.username,
-          password: hashedPassword,
-          email: options.email,
-        })
-        .returning("*")
-        .execute();
+      const result = await User.create({
+        username: options.username,
+        password: hashedPassword,
+        email: options.email,
+      }).save();
 
-      user = result.raw[0];
+      user = result;
     } catch (error) {
       console.log(`error: ${error}`);
-      if (error.code === "23505" || error.detail.includes("already exists")) {
+      if (error) {
         return {
           errors: [
             {
@@ -194,7 +186,10 @@ export class UserResolver {
       }
     }
 
-    req.session.userId = user.id;
+    if (user) {
+      req.session.userId = user.id;
+      req.session.userEmail = user.email;
+    }
 
     return {
       user,
@@ -221,7 +216,7 @@ export class UserResolver {
         ],
       };
     }
-    const user = await User.findOne({ where: { email } });
+    let user = await User.findOne({ where: { email } });
 
     if (user === null || user === undefined || !user) {
       return {
@@ -245,7 +240,13 @@ export class UserResolver {
       };
     }
 
-    req.session.userId = user.id;
+    if (user.id === undefined || user.id === null || !user.id) {
+      req.session.userEmail = user.email;
+    }
+
+    if (user.id !== undefined || user.id !== null || user.id) {
+      req.session.userId = user.id;
+    }
 
     return {
       user,
