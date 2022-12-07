@@ -19,7 +19,6 @@ import { UserPasswordInput } from "../../utils/UserPasswordInput";
 import { sendEmail } from "../../utils/sendEmail";
 import { v4 } from "uuid";
 import { dataSource } from "../appDataSource";
-// import { ObjectID } from "typeorm";
 
 @ObjectType()
 class FieldError {
@@ -42,14 +41,11 @@ class UserResponse {
 @Resolver(User)
 export class UserResolver {
   @FieldResolver(() => String)
-  //allow you to see your email of the posts you made while posts made by other authors, you won't see their email for security purpose
   email(@Root() user: User, @Ctx() { req }: MyContext) {
-    //this is the current user and its okay to show them their own email
     if (req.session.userId === user.id) {
       return user.email;
     }
 
-    //current user wants to see someone else email
     return "";
   }
 
@@ -83,8 +79,6 @@ export class UserResolver {
         ],
       };
     }
-
-    //Note: redis is storing our user details in string, hence why i used parseInt
 
     let myUserId = parseInt(userId);
 
