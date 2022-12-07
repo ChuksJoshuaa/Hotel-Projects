@@ -13,7 +13,6 @@ import {
 } from "type-graphql";
 import { HotelBrand } from "../entities/HotelBrand";
 import { dataSource } from "../appDataSource";
-import { ObjectID } from "typeorm";
 
 @InputType()
 class BrandInput {
@@ -42,7 +41,7 @@ export class HotelBrandResolver {
 
   //Get single brand
   @Query(() => HotelBrand, { nullable: true })
-  post(@Arg("id", () => String) id: ObjectID): Promise<HotelBrand | null> {
+  brand(@Arg("id", () => String) id: any): Promise<HotelBrand | null> {
     return HotelBrand.findOne({ where: { _id: id } });
   }
 

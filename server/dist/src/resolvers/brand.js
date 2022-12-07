@@ -26,7 +26,6 @@ const Authenticated_1 = require("../middleware/Authenticated");
 const type_graphql_1 = require("type-graphql");
 const HotelBrand_1 = require("../entities/HotelBrand");
 const appDataSource_1 = require("../appDataSource");
-const typeorm_1 = require("typeorm");
 let BrandInput = class BrandInput {
 };
 __decorate([
@@ -51,7 +50,7 @@ let HotelBrandResolver = class HotelBrandResolver {
             return qb.getMany();
         });
     }
-    post(id) {
+    brand(id) {
         return HotelBrand_1.HotelBrand.findOne({ where: { _id: id } });
     }
     createBrand(input, { req }) {
@@ -91,9 +90,9 @@ __decorate([
     (0, type_graphql_1.Query)(() => HotelBrand_1.HotelBrand, { nullable: true }),
     __param(0, (0, type_graphql_1.Arg)("id", () => String)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeorm_1.ObjectID]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
-], HotelBrandResolver.prototype, "post", null);
+], HotelBrandResolver.prototype, "brand", null);
 __decorate([
     (0, type_graphql_1.Mutation)(() => HotelBrand_1.HotelBrand),
     (0, type_graphql_1.UseMiddleware)(Authenticated_1.Authenticated),
