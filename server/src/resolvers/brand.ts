@@ -80,8 +80,8 @@ export class HotelBrandResolver {
 
   //Delete Brand
   @Mutation(() => Boolean)
-  async deleteBrand(@Arg("id", () => String) id: ObjectID): Promise<boolean> {
-    await HotelBrand.delete({ _id: id });
+  async deleteBrand(@Arg("_id", () => String) _id: string): Promise<boolean> {
+    await HotelBrand.delete(_id);
     return true;
   }
 }

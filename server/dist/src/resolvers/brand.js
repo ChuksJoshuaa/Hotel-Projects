@@ -72,9 +72,9 @@ let HotelBrandResolver = class HotelBrandResolver {
             return brand;
         });
     }
-    deleteBrand(id) {
+    deleteBrand(_id) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield HotelBrand_1.HotelBrand.delete({ _id: id });
+            yield HotelBrand_1.HotelBrand.delete(_id);
             return true;
         });
     }
@@ -114,9 +114,9 @@ __decorate([
 ], HotelBrandResolver.prototype, "updateBrand", null);
 __decorate([
     (0, type_graphql_1.Mutation)(() => Boolean),
-    __param(0, (0, type_graphql_1.Arg)("id", () => String)),
+    __param(0, (0, type_graphql_1.Arg)("_id", () => String)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeorm_1.ObjectID]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], HotelBrandResolver.prototype, "deleteBrand", null);
 HotelBrandResolver = __decorate([
