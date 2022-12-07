@@ -118,10 +118,8 @@ export class UserResolver {
       { password: await argon2.hash(newPassword) }
     );
 
-    //After password has been changed, delete the key hence the token cannot be reused
     await redis.del(redisKey);
 
-    //log user in after change password
     req.session.userId = user.id;
 
     return { user };
@@ -175,14 +173,6 @@ export class UserResolver {
     let user;
 
     try {
-      //STEP 1
-      // User.create({
-      //   username: options.username,
-      //   password: hashedPassword,
-      //   email: options.email,
-      // }).save();
-
-      //SQL BUILDER - STEP 2
       const result = await dataSource
         .createQueryBuilder()
         .insert()
