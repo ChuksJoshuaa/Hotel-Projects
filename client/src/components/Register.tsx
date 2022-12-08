@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { useRegisterMutation, MeQuery, MeDocument } from "../generated/graphql";
 
 interface RegisterProps {}
 
@@ -13,12 +14,7 @@ const Register: React.FC<RegisterProps> = ({}) => {
   const [usernameError, setUsernameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-
-  //  const [register] = useMutation(REGISTER, {
-  //    variables: { options: { username, email, password} },
-  //    onCompleted: () => navigate("/"),
-  //    refetchQueries: [{ query: ME }],
-  //  });
+  const [register] = useRegisterMutation();
 
   const handleEnterKeyPress = (e: any) => {
     e.preventDefault();
@@ -26,6 +22,21 @@ const Register: React.FC<RegisterProps> = ({}) => {
       handleSubmit(e);
     }
   };
+
+  // const callRegister = async (values) => {
+  //    const response = await register({
+  //      variables: { options: values },
+  //      update: (cache, { data }) => {
+  //        cache.writeQuery<MeQuery>({
+  //          query: MeDocument,
+  //          data: {
+  //            __typename: "Query",
+  //            me: data?.register.user,
+  //          },
+  //        });
+  //      },
+  //    });
+  // }
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -77,7 +88,9 @@ const Register: React.FC<RegisterProps> = ({}) => {
       setPasswordError(false);
     }
 
-    console.log(email, username, password);
+    // console.log(email, username, password);
+
+    let values = { email, username, password };
 
     setEmail("");
     setUsername("");
