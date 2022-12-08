@@ -40,7 +40,7 @@ let HotelBrandResolver = class HotelBrandResolver {
         return __awaiter(this, void 0, void 0, function* () {
             const realLimit = Math.min(50, limit);
             const qb = appDataSource_1.dataSource
-                .getMongoRepository(HotelBrand_1.HotelBrand)
+                .getRepository(HotelBrand_1.HotelBrand)
                 .createQueryBuilder("p")
                 .orderBy('"createdAt"', "DESC")
                 .take(realLimit);
@@ -51,7 +51,7 @@ let HotelBrandResolver = class HotelBrandResolver {
         });
     }
     brand(id) {
-        return HotelBrand_1.HotelBrand.findOne({ where: { _id: id } });
+        return HotelBrand_1.HotelBrand.findOne({ where: { id } });
     }
     createBrand(input, { req }) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -59,21 +59,21 @@ let HotelBrandResolver = class HotelBrandResolver {
             return HotelBrand_1.HotelBrand.create(Object.assign(Object.assign({}, input), { authorId: authorUserId })).save();
         });
     }
-    updateBrand(_id, name) {
+    updateBrand(id, name) {
         return __awaiter(this, void 0, void 0, function* () {
-            const brand = yield HotelBrand_1.HotelBrand.findOne({ where: { _id } });
+            const brand = yield HotelBrand_1.HotelBrand.findOne({ where: { id } });
             if (!brand) {
                 return null;
             }
             if (typeof name !== "undefined") {
-                yield HotelBrand_1.HotelBrand.update(_id, { name });
+                yield HotelBrand_1.HotelBrand.update({ id }, { name });
             }
             return brand;
         });
     }
-    deleteBrand(_id) {
+    deleteBrand(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield HotelBrand_1.HotelBrand.delete(_id);
+            yield HotelBrand_1.HotelBrand.delete(id);
             return true;
         });
     }
@@ -88,9 +88,9 @@ __decorate([
 ], HotelBrandResolver.prototype, "brands", null);
 __decorate([
     (0, type_graphql_1.Query)(() => HotelBrand_1.HotelBrand, { nullable: true }),
-    __param(0, (0, type_graphql_1.Arg)("id", () => String)),
+    __param(0, (0, type_graphql_1.Arg)("id")),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], HotelBrandResolver.prototype, "brand", null);
 __decorate([
@@ -105,17 +105,17 @@ __decorate([
 __decorate([
     (0, type_graphql_1.Mutation)(() => HotelBrand_1.HotelBrand, { nullable: true }),
     (0, type_graphql_1.UseMiddleware)(Authenticated_1.Authenticated),
-    __param(0, (0, type_graphql_1.Arg)("_id", () => String)),
+    __param(0, (0, type_graphql_1.Arg)("id")),
     __param(1, (0, type_graphql_1.Arg)("name", () => String, { nullable: true })),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:paramtypes", [Number, String]),
     __metadata("design:returntype", Promise)
 ], HotelBrandResolver.prototype, "updateBrand", null);
 __decorate([
     (0, type_graphql_1.Mutation)(() => Boolean),
-    __param(0, (0, type_graphql_1.Arg)("_id", () => String)),
+    __param(0, (0, type_graphql_1.Arg)("id")),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], HotelBrandResolver.prototype, "deleteBrand", null);
 HotelBrandResolver = __decorate([

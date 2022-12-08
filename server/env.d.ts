@@ -8,7 +8,6 @@ declare namespace NodeJS {
     DATABASE_PASSWORD: string;
     DATABASE_PORT: string | number;
     NODE_ENV: string;
-    MONGO_URI: string;
     DATABASE_NAME: string;
   }
 }
