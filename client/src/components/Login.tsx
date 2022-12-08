@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FaUser } from "react-icons/fa";
+import { useLoginMutation } from "../generated/graphql";
 
 interface LoginProps {}
 
@@ -9,6 +10,7 @@ const Login: React.FC<LoginProps> = ({}) => {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [, login] = useLoginMutation();
 
   const handleEnterKeyPress = (e: any) => {
     e.preventDefault();
@@ -17,7 +19,7 @@ const Login: React.FC<LoginProps> = ({}) => {
     }
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     setEmailError(false);
@@ -55,6 +57,13 @@ const Login: React.FC<LoginProps> = ({}) => {
       setErrors("");
       setPasswordError(false);
     }
+
+    const { data, error } = await login({
+      email: email,
+      password: password,
+    });
+
+    console.log(data, error);
 
     console.log(email, password);
 

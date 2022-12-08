@@ -14,7 +14,7 @@ const Register: React.FC<RegisterProps> = ({}) => {
   const [usernameError, setUsernameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-  const [register] = useRegisterMutation();
+  const [, register] = useRegisterMutation();
 
   const handleEnterKeyPress = (e: any) => {
     e.preventDefault();
@@ -38,7 +38,7 @@ const Register: React.FC<RegisterProps> = ({}) => {
   //    });
   // }
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     setEmailError(false);
@@ -88,9 +88,15 @@ const Register: React.FC<RegisterProps> = ({}) => {
       setPasswordError(false);
     }
 
-    // console.log(email, username, password);
+    const { data, error } = await register({
+      options: {
+        email: email,
+        username: username,
+        password: password,
+      },
+    });
 
-    let values = { email, username, password };
+    console.log(data, error);
 
     setEmail("");
     setUsername("");
