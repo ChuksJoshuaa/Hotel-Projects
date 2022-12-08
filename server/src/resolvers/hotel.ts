@@ -93,7 +93,6 @@ export class HotelResolver {
       replacements
     );
 
-    console.log(hotels);
     return {
       hotels: hotels.slice(0, realLimit),
       hasMore: hotels.length === realLimitPlusOne,

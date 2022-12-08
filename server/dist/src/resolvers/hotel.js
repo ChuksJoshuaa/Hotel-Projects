@@ -104,7 +104,6 @@ let HotelResolver = class HotelResolver {
         order by p."createdAt" DESC
         limit $1    
     `, replacements);
-            console.log(hotels);
             return {
                 hotels: hotels.slice(0, realLimit),
                 hasMore: hotels.length === realLimitPlusOne,
