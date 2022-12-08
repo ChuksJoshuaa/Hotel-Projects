@@ -29,6 +29,10 @@ export class Hotel extends BaseEntity {
 
   @Field()
   @Column()
+  price!: number;
+
+  @Field()
+  @Column()
   image!: string;
 
   @Field()
@@ -47,15 +51,19 @@ export class Hotel extends BaseEntity {
   @Column()
   authorId: string;
 
-  @Field(() => String)
+  @Field(() => User)
   @ManyToOne(() => User, (user) => user.hotels)
   author!: User;
 
   @Field()
   @Column()
+  brandName: string;
+
+  @Field()
+  @Column()
   brandId: number;
 
-  @Field(() => String)
+  @Field(() => HotelBrand)
   @ManyToOne(() => HotelBrand, (item) => item.brands)
   brand!: HotelBrand;
 

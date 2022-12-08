@@ -41,7 +41,7 @@ __decorate([
     __metadata("design:type", Array)
 ], HotelBrand.prototype, "brands", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(() => String),
+    (0, type_graphql_1.Field)(() => User_1.User),
     (0, typeorm_1.ManyToOne)(() => User_1.User, (item) => item.hotelbrands),
     __metadata("design:type", User_1.User)
 ], HotelBrand.prototype, "author", void 0);

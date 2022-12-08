@@ -1,4 +1,20 @@
-insert into hotel (name, description, price, city, country, image, address, "brandName", "authorId", "createdAt") values ('Keeling-Beier', 'Sed ante. Vivamus tortor. Duis mattis egestas metus.
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.FakeHotels1670487401008 = void 0;
+class FakeHotels1670487401008 {
+    up(queryRunner) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield queryRunner.query(`
+               insert into hotel (name, description, price, city, country, image, address, "brandName", "authorId", "createdAt") values ('Keeling-Beier', 'Sed ante. Vivamus tortor. Duis mattis egestas metus.
 
 Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.
 
@@ -300,3 +316,13 @@ insert into hotel (name, description, price, city, country, image, address, "bra
 Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.
 
 Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.', 555, 'Angol', 'Chile', 'http://dummyimage.com/397x411.png/cc0000/ffffff', 'Del Mar', 'standard', 2, '2022-08-02T06:40:12Z');
+   
+        `);
+        });
+    }
+    down(_queryRunner) {
+        return __awaiter(this, void 0, void 0, function* () { });
+    }
+}
+exports.FakeHotels1670487401008 = FakeHotels1670487401008;
+//# sourceMappingURL=1670487401008-FakeHotels.js.map

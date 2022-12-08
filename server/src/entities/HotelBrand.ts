@@ -8,6 +8,7 @@ import {
   UpdateDateColumn,
   OneToMany,
   ManyToOne,
+  // Any,
 } from "typeorm";
 import { Hotel } from "./Hotel";
 import { User } from "./User";
@@ -30,7 +31,7 @@ export class HotelBrand extends BaseEntity {
   @OneToMany(() => Hotel, (item) => item.brand)
   brands: Hotel[];
 
-  @Field(() => String)
+  @Field(() => User)
   @ManyToOne(() => User, (item) => item.hotelbrands)
   author!: User;
 
