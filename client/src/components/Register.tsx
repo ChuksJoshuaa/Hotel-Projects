@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { FaUser } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 interface RegisterProps {}
 
 const Register: React.FC<RegisterProps> = ({}) => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState("");
   const [username, setUsername] = useState("");
@@ -11,6 +13,12 @@ const Register: React.FC<RegisterProps> = ({}) => {
   const [usernameError, setUsernameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+
+  //  const [register] = useMutation(REGISTER, {
+  //    variables: { options: { username, email, password} },
+  //    onCompleted: () => navigate("/"),
+  //    refetchQueries: [{ query: ME }],
+  //  });
 
   const handleEnterKeyPress = (e: any) => {
     e.preventDefault();
