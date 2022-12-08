@@ -13,6 +13,7 @@ exports.User = void 0;
 const type_graphql_1 = require("type-graphql");
 const typeorm_1 = require("typeorm");
 const Hotel_1 = require("./Hotel");
+const HotelBrand_1 = require("./HotelBrand");
 let User = class User extends typeorm_1.BaseEntity {
     constructor() {
         super(...arguments);
@@ -24,7 +25,7 @@ __decorate([
     (0, type_graphql_1.Field)(() => String),
     (0, typeorm_1.ObjectIdColumn)(),
     __metadata("design:type", typeorm_1.ObjectID)
-], User.prototype, "id", void 0);
+], User.prototype, "_id", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),
     (0, typeorm_1.Column)({ unique: true }),
@@ -43,6 +44,10 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => Hotel_1.Hotel, (hotel) => hotel.author),
     __metadata("design:type", Array)
 ], User.prototype, "hotels", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => HotelBrand_1.HotelBrand, (hotel) => hotel.author),
+    __metadata("design:type", Array)
+], User.prototype, "hotelbrands", void 0);
 __decorate([
     (0, type_graphql_1.Field)(() => String),
     (0, typeorm_1.CreateDateColumn)(),

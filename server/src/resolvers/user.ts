@@ -8,6 +8,8 @@ import {
   Query,
   FieldResolver,
   Root,
+  // FieldResolver,
+  // Root,
 } from "type-graphql";
 import { MyContext } from "../types";
 import { User } from "../entities/User";
@@ -107,13 +109,13 @@ export class UserResolver {
     }
 
     await User.update(
-      { email: myUserId as any },
+      { _id: user._id as any },
       { password: await argon2.hash(newPassword) }
     );
 
     await redis.del(redisKey);
 
-    req.session.userId = user.id;
+    req.session.userId = user._id;
 
     return { user };
   }
@@ -148,6 +150,7 @@ export class UserResolver {
     if (!req.session.userEmail) {
       return null;
     }
+
     return User.findOne({ where: { email: req.session.userEmail } });
   }
 
@@ -187,7 +190,7 @@ export class UserResolver {
     }
 
     if (user) {
-      req.session.userId = user.id;
+      req.session.userId = user._id;
       req.session.userEmail = user.email;
     }
 
@@ -240,13 +243,8 @@ export class UserResolver {
       };
     }
 
-    if (user.id === undefined || user.id === null || !user.id) {
-      req.session.userEmail = user.email;
-    }
-
-    if (user.id !== undefined || user.id !== null || user.id) {
-      req.session.userId = user.id;
-    }
+    req.session.userId = user._id;
+    req.session.userEmail = user.email;
 
     return {
       user,

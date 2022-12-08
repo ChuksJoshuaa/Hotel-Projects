@@ -114,9 +114,9 @@ let UserResolver = class UserResolver {
                     ],
                 };
             }
-            yield User_1.User.update({ email: myUserId }, { password: yield argon2_1.default.hash(newPassword) });
+            yield User_1.User.update({ _id: user._id }, { password: yield argon2_1.default.hash(newPassword) });
             yield redis.del(redisKey);
-            req.session.userId = user.id;
+            req.session.userId = user._id;
             return { user };
         });
     }
@@ -170,7 +170,7 @@ let UserResolver = class UserResolver {
                 }
             }
             if (user) {
-                req.session.userId = user.id;
+                req.session.userId = user._id;
                 req.session.userEmail = user.email;
             }
             return {
@@ -212,12 +212,8 @@ let UserResolver = class UserResolver {
                     ],
                 };
             }
-            if (user.id === undefined || user.id === null || !user.id) {
-                req.session.userEmail = user.email;
-            }
-            if (user.id !== undefined || user.id !== null || user.id) {
-                req.session.userId = user.id;
-            }
+            req.session.userId = user._id;
+            req.session.userEmail = user.email;
             return {
                 user,
             };

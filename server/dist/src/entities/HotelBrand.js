@@ -13,6 +13,7 @@ exports.HotelBrand = void 0;
 const type_graphql_1 = require("type-graphql");
 const typeorm_1 = require("typeorm");
 const Hotel_1 = require("./Hotel");
+const User_1 = require("./User");
 let HotelBrand = class HotelBrand extends typeorm_1.BaseEntity {
     constructor() {
         super(...arguments);
@@ -24,16 +25,26 @@ __decorate([
     (0, type_graphql_1.Field)(() => String),
     (0, typeorm_1.ObjectIdColumn)(),
     __metadata("design:type", typeorm_1.ObjectID)
-], HotelBrand.prototype, "id", void 0);
+], HotelBrand.prototype, "_id", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], HotelBrand.prototype, "name", void 0);
 __decorate([
+    (0, type_graphql_1.Field)(),
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], HotelBrand.prototype, "authorId", void 0);
+__decorate([
     (0, typeorm_1.OneToMany)(() => Hotel_1.Hotel, (item) => item.brand),
     __metadata("design:type", Array)
 ], HotelBrand.prototype, "brands", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(() => String),
+    (0, typeorm_1.ManyToOne)(() => User_1.User, (item) => item.hotelbrands),
+    __metadata("design:type", User_1.User)
+], HotelBrand.prototype, "author", void 0);
 __decorate([
     (0, type_graphql_1.Field)(() => String),
     (0, typeorm_1.CreateDateColumn)(),
