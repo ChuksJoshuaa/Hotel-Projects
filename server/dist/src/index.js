@@ -29,6 +29,7 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const apollo_server_core_1 = require("apollo-server-core");
 const appDataSource_1 = require("./appDataSource");
 const brand_1 = require("./resolvers/brand");
+const hotel_1 = require("./resolvers/hotel");
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     yield appDataSource_1.dataSource
         .initialize()
@@ -63,7 +64,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     });
     const apolloServer = new apollo_server_express_1.ApolloServer({
         schema: yield (0, type_graphql_1.buildSchema)({
-            resolvers: [user_1.UserResolver, brand_1.HotelBrandResolver],
+            resolvers: [user_1.UserResolver, brand_1.HotelBrandResolver, hotel_1.HotelResolver],
             validate: false,
         }),
         plugins: [

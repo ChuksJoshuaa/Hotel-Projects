@@ -23,9 +23,9 @@ let HotelBrand = class HotelBrand extends typeorm_1.BaseEntity {
 };
 __decorate([
     (0, type_graphql_1.Field)(() => String),
-    (0, typeorm_1.ObjectIdColumn)(),
-    __metadata("design:type", typeorm_1.ObjectID)
-], HotelBrand.prototype, "_id", void 0);
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    __metadata("design:type", Number)
+], HotelBrand.prototype, "id", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),
     (0, typeorm_1.Column)(),
@@ -34,14 +34,14 @@ __decorate([
 __decorate([
     (0, type_graphql_1.Field)(),
     (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
+    __metadata("design:type", Number)
 ], HotelBrand.prototype, "authorId", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => Hotel_1.Hotel, (item) => item.brand),
     __metadata("design:type", Array)
 ], HotelBrand.prototype, "brands", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(() => String),
+    (0, type_graphql_1.Field)(() => User_1.User),
     (0, typeorm_1.ManyToOne)(() => User_1.User, (item) => item.hotelbrands),
     __metadata("design:type", User_1.User)
 ], HotelBrand.prototype, "author", void 0);

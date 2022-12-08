@@ -4,11 +4,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  ObjectIdColumn,
+  PrimaryGeneratedColumn,
   UpdateDateColumn,
-  ObjectID,
   OneToMany,
   ManyToOne,
+  // Any,
 } from "typeorm";
 import { Hotel } from "./Hotel";
 import { User } from "./User";
@@ -17,8 +17,8 @@ import { User } from "./User";
 @Entity()
 export class HotelBrand extends BaseEntity {
   @Field(() => String)
-  @ObjectIdColumn()
-  _id!: ObjectID;
+  @PrimaryGeneratedColumn()
+  id!: number;
 
   @Field()
   @Column()
@@ -26,12 +26,12 @@ export class HotelBrand extends BaseEntity {
 
   @Field()
   @Column()
-  authorId!: string;
+  authorId!: number;
 
   @OneToMany(() => Hotel, (item) => item.brand)
   brands: Hotel[];
 
-  @Field(() => String)
+  @Field(() => User)
   @ManyToOne(() => User, (item) => item.hotelbrands)
   author!: User;
 

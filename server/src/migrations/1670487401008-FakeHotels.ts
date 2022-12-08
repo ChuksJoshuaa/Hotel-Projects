@@ -1,4 +1,9 @@
-insert into hotel (name, description, price, city, country, image, address, "brandName", "authorId", "createdAt") values ('Keeling-Beier', 'Sed ante. Vivamus tortor. Duis mattis egestas metus.
+import { MigrationInterface, QueryRunner } from "typeorm";
+
+export class FakeHotels1670487401008 implements MigrationInterface {
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
+               insert into hotel (name, description, price, city, country, image, address, "brandName", "authorId", "createdAt") values ('Keeling-Beier', 'Sed ante. Vivamus tortor. Duis mattis egestas metus.
 
 Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.
 
@@ -300,3 +305,9 @@ insert into hotel (name, description, price, city, country, image, address, "bra
 Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst.
 
 Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.', 555, 'Angol', 'Chile', 'http://dummyimage.com/397x411.png/cc0000/ffffff', 'Del Mar', 'standard', 2, '2022-08-02T06:40:12Z');
+   
+        `);
+  }
+
+  public async down(_queryRunner: QueryRunner): Promise<void> {}
+}

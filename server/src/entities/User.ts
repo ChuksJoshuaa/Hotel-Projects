@@ -4,8 +4,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  ObjectID,
-  ObjectIdColumn,
+  PrimaryGeneratedColumn,
   OneToMany,
   UpdateDateColumn,
 } from "typeorm";
@@ -16,8 +15,8 @@ import { HotelBrand } from "./HotelBrand";
 @Entity()
 export class User extends BaseEntity {
   @Field(() => String)
-  @ObjectIdColumn()
-  _id!: ObjectID;
+  @PrimaryGeneratedColumn()
+  id!: number;
 
   @Field()
   @Column({ unique: true })

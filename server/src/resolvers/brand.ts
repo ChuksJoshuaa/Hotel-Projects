@@ -29,7 +29,7 @@ export class HotelBrandResolver {
   ): Promise<HotelBrand[]> {
     const realLimit = Math.min(50, limit);
     const qb = dataSource
-      .getMongoRepository(HotelBrand)
+      .getRepository(HotelBrand)
       .createQueryBuilder("p")
       .orderBy('"createdAt"', "DESC")
       .take(realLimit);
@@ -41,8 +41,8 @@ export class HotelBrandResolver {
 
   //Get single brand
   @Query(() => HotelBrand, { nullable: true })
-  brand(@Arg("id", () => String) id: any): Promise<HotelBrand | null> {
-    return HotelBrand.findOne({ where: { _id: id } });
+  brand(@Arg("id") id: number): Promise<HotelBrand | null> {
+    return HotelBrand.findOne({ where: { id } });
   }
 
   //Create HotelBrand
@@ -55,7 +55,7 @@ export class HotelBrandResolver {
     let authorUserId = req.session.userId;
     return HotelBrand.create({
       ...input,
-      authorId: authorUserId as any,
+      authorId: authorUserId,
     }).save();
   }
 
@@ -63,15 +63,15 @@ export class HotelBrandResolver {
   @Mutation(() => HotelBrand, { nullable: true })
   @UseMiddleware(Authenticated)
   async updateBrand(
-    @Arg("_id", () => String) _id: string,
+    @Arg("id") id: number,
     @Arg("name", () => String, { nullable: true }) name: string
   ): Promise<HotelBrand | null> {
-    const brand = await HotelBrand.findOne({ where: { _id } as any });
+    const brand = await HotelBrand.findOne({ where: { id } });
     if (!brand) {
       return null;
     }
     if (typeof name !== "undefined") {
-      await HotelBrand.update(_id, { name });
+      await HotelBrand.update({ id }, { name });
     }
 
     return brand;
@@ -79,8 +79,8 @@ export class HotelBrandResolver {
 
   //Delete Brand
   @Mutation(() => Boolean)
-  async deleteBrand(@Arg("_id", () => String) _id: string): Promise<boolean> {
-    await HotelBrand.delete(_id);
+  async deleteBrand(@Arg("id") id: number): Promise<boolean> {
+    await HotelBrand.delete(id);
     return true;
   }
 }

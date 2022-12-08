@@ -22,9 +22,9 @@ let Hotel = class Hotel extends typeorm_1.BaseEntity {
     }
 };
 __decorate([
-    (0, type_graphql_1.Field)(() => String),
-    (0, typeorm_1.ObjectIdColumn)(),
-    __metadata("design:type", typeorm_1.ObjectID)
+    (0, type_graphql_1.Field)(),
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    __metadata("design:type", Number)
 ], Hotel.prototype, "id", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),
@@ -36,6 +36,11 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Hotel.prototype, "description", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Hotel.prototype, "price", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),
     (0, typeorm_1.Column)(),
@@ -62,7 +67,7 @@ __decorate([
     __metadata("design:type", String)
 ], Hotel.prototype, "authorId", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(() => String),
+    (0, type_graphql_1.Field)(() => User_1.User),
     (0, typeorm_1.ManyToOne)(() => User_1.User, (user) => user.hotels),
     __metadata("design:type", User_1.User)
 ], Hotel.prototype, "author", void 0);
@@ -72,7 +77,12 @@ __decorate([
     __metadata("design:type", String)
 ], Hotel.prototype, "brandName", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(() => String),
+    (0, type_graphql_1.Field)(),
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Hotel.prototype, "brandId", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(() => HotelBrand_1.HotelBrand),
     (0, typeorm_1.ManyToOne)(() => HotelBrand_1.HotelBrand, (item) => item.brands),
     __metadata("design:type", HotelBrand_1.HotelBrand)
 ], Hotel.prototype, "brand", void 0);
