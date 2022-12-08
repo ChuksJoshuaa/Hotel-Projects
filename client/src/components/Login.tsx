@@ -1,11 +1,14 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { FaUser } from "react-icons/fa";
 
 interface LoginProps {}
 
 const Login: React.FC<LoginProps> = ({}) => {
   const [email, setEmail] = useState("");
+  const [errors, setErrors] = useState("");
   const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
 
   const handleEnterKeyPress = (e: any) => {
     e.preventDefault();
@@ -16,10 +19,47 @@ const Login: React.FC<LoginProps> = ({}) => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    // portfolioElem.classList.add('is-invalid');
 
-    let emailElem = document.getElementById("email");
-    let passwordElem = document.getElementById("password");
+    setEmailError(false);
+    setPasswordError(false);
+    setErrors("");
+
+    if (!email) {
+      setErrors("This field is required");
+      setEmailError(true);
+      return;
+    }
+
+    if (
+      email.match(
+        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+      ) === null
+    ) {
+      setErrors("Please enter a valid email");
+      setEmailError(true);
+      return;
+    }
+
+    if (email) {
+      setErrors("");
+      setEmailError(false);
+    }
+
+    if (!password) {
+      setErrors("This field is required");
+      setPasswordError(true);
+      return;
+    }
+
+    if (password) {
+      setErrors("");
+      setPasswordError(false);
+    }
+
+    console.log(email, password);
+
+    setEmail("");
+    setPassword("");
   };
   return (
     <>
@@ -39,7 +79,7 @@ const Login: React.FC<LoginProps> = ({}) => {
         className="modal fade"
         id="LoginModal"
         tabIndex={1}
-        aria-labelledby="RegisterModalLabel"
+        aria-labelledby="LoginModalLabel"
         aria-hidden="true"
       >
         <div className="modal-dialog">
@@ -56,6 +96,9 @@ const Login: React.FC<LoginProps> = ({}) => {
               ></button>
             </div>
             <div className="modal-body">
+              <p className="text-center text-danger fs-8 mb-1 font-weight-semibold">
+                {errors}
+              </p>
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                   <label className="form-label">Email</label>
@@ -65,27 +108,43 @@ const Login: React.FC<LoginProps> = ({}) => {
                     className="form-control"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    style={{
+                      border: `${emailError ? "1px solid crimson" : ""}`,
+                    }}
                   />
                 </div>
+
                 <div className="mb-3">
                   <label className="form-label">Password</label>
                   <input
-                    type="text"
+                    type="password"
                     id="password"
                     className="form-control"
                     value={password}
+                    style={{
+                      border: `${passwordError ? "1px solid crimson" : ""}`,
+                    }}
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
 
-                <button
-                  onKeyDown={handleEnterKeyPress}
-                  className="btn btn-secondary"
-                  type="submit"
-                  data-bs-dismiss="modal"
-                >
-                  Submit
-                </button>
+                <div className="d-flex">
+                  <button
+                    onKeyDown={handleEnterKeyPress}
+                    className="btn btn-secondary"
+                    type="submit"
+                    style={{ marginRight: "1em" }}
+                  >
+                    Submit
+                  </button>
+                  <button
+                    data-bs-dismiss="modal"
+                    className="btn btn-danger"
+                    type="button"
+                  >
+                    close
+                  </button>
+                </div>
               </form>
             </div>
           </div>
