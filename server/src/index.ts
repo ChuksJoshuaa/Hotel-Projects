@@ -4,8 +4,7 @@ import "dotenv-safe/config";
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
-// import { PostResolver } from "./resolvers/post";
-// import { UserResolver } from "./resolvers/user";
+import { UserResolver } from "./resolvers/user";
 import Redis from "ioredis";
 import connectRedis from "connect-redis";
 import session from "express-session";
@@ -15,6 +14,8 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
 import { dataSource } from "./appDataSource";
+import { HotelBrandResolver } from "./resolvers/brand";
+import { HotelResolver } from "./resolvers/hotel";
 
 const main = async () => {
   await dataSource
@@ -62,7 +63,7 @@ const main = async () => {
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [""],
+      resolvers: [UserResolver, HotelBrandResolver, HotelResolver],
       validate: false,
     }),
 
@@ -91,5 +92,3 @@ const main = async () => {
 main().catch((err) => {
   console.log(err);
 });
-
-// [HelloResolver, PostResolver, UserResolver];

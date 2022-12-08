@@ -8,6 +8,8 @@ import {
   Query,
   FieldResolver,
   Root,
+  // FieldResolver,
+  // Root,
 } from "type-graphql";
 import { MyContext } from "../types";
 import { User } from "../entities/User";
@@ -82,7 +84,7 @@ export class UserResolver {
 
     let myUserId = parseInt(userId);
 
-    const user = await User.findOne({ where: { id: myUserId as any } });
+    const user = await User.findOne({ where: { id: myUserId } });
 
     if (!user) {
       return {
@@ -108,7 +110,7 @@ export class UserResolver {
     }
 
     await User.update(
-      { id: myUserId as any },
+      { id: myUserId },
       { password: await argon2.hash(newPassword) }
     );
 
@@ -135,7 +137,7 @@ export class UserResolver {
 
     await redis.set(
       `${FORGET_PASSWORD_PREFIX}${token}`,
-      user.id as any,
+      user.id,
       "EX",
       `${expireDate}`
     );
@@ -182,7 +184,7 @@ export class UserResolver {
       user = result.raw[0];
     } catch (error) {
       console.log(`error: ${error}`);
-      if (error.code === "23505" || error.detail.includes("already exists")) {
+      if (error) {
         return {
           errors: [
             {
@@ -221,7 +223,7 @@ export class UserResolver {
         ],
       };
     }
-    const user = await User.findOne({ where: { email } });
+    let user = await User.findOne({ where: { email } });
 
     if (user === null || user === undefined || !user) {
       return {

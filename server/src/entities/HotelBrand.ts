@@ -4,26 +4,36 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  ObjectIdColumn,
+  PrimaryGeneratedColumn,
   UpdateDateColumn,
-  ObjectID,
   OneToMany,
+  ManyToOne,
+  // Any,
 } from "typeorm";
 import { Hotel } from "./Hotel";
+import { User } from "./User";
 
 @ObjectType()
 @Entity()
 export class HotelBrand extends BaseEntity {
-  @Field()
-  @ObjectIdColumn()
-  id!: ObjectID;
+  @Field(() => String)
+  @PrimaryGeneratedColumn()
+  id!: number;
 
   @Field()
   @Column()
   name!: string;
 
+  @Field()
+  @Column()
+  authorId!: number;
+
   @OneToMany(() => Hotel, (item) => item.brand)
   brands: Hotel[];
+
+  @Field(() => User)
+  @ManyToOne(() => User, (item) => item.hotelbrands)
+  author!: User;
 
   @Field(() => String)
   @CreateDateColumn()

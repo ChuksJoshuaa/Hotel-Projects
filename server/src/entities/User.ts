@@ -4,19 +4,19 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  ObjectID,
-  ObjectIdColumn,
+  PrimaryGeneratedColumn,
   OneToMany,
   UpdateDateColumn,
 } from "typeorm";
 import { Hotel } from "./Hotel";
+import { HotelBrand } from "./HotelBrand";
 
 @ObjectType()
 @Entity()
 export class User extends BaseEntity {
-  @Field()
-  @ObjectIdColumn()
-  id!: ObjectID;
+  @Field(() => String)
+  @PrimaryGeneratedColumn()
+  id!: number;
 
   @Field()
   @Column({ unique: true })
@@ -31,6 +31,9 @@ export class User extends BaseEntity {
 
   @OneToMany(() => Hotel, (hotel) => hotel.author)
   hotels: Hotel[];
+
+  @OneToMany(() => HotelBrand, (hotel) => hotel.author)
+  hotelbrands: HotelBrand[];
 
   @Field(() => String)
   @CreateDateColumn()

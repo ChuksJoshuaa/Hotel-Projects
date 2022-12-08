@@ -1,20 +1,126 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 html {
   overflow-x: hidden;
 }
+
 body {
   margin: 0;
+  font-family: "Rajdhani", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: white;
-  font-family: "Rajdhani", sans-serif;
   overflow-x: hidden;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.navbar-brand {
+  color: #222;
+}
+
+.navbar-brand img {
+  width: 40px;
+  margin-right: 10px;
+  border-radius: 50%;
+}
+
+.btn {
+  font-size: 15px;
+}
+
+.btn-primary,
+.bg-primary {
+  background-color: #df3ca6 !important;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #df3ca6;
+  opacity: 0.9;
+}
+
+.btn-secondary {
+  background-color: #7430f9;
+}
+
+.btn-secondary:hover {
+  background-color: #7430f9;
+  opacity: 0.9;
+}
+
+.icon {
+  margin-right: 5px;
+}
+
+.home {
+  height: 100%;
+  position: relative;
+}
+.shadow {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.single-head {
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2em;
+}
+
+.title {
+  font-size: 1.4em;
+  margin-top: 0.4em;
+}
+
+.project-status {
+  font-size: 1em;
+}
+
+@media screen and (max-width: 360px) {
+  .single-head {
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+
+  .title {
+    font-size: 0.8em;
+  }
+}
+
+.lead {
+  color: green;
+}
+
+.footer {
+  height: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.footer span {
+  color: #222;
+}
+
+.footer h5 {
+  color: #222;
+  margin: 0.1rem;
+  font-weight: 400;
+  text-transform: none;
+  line-height: 1.25;
+}
+
+@media (min-width: 776px) {
+  .footer {
+    flex-direction: row;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .hide-btn {
+    display: none;
+  }
 }
