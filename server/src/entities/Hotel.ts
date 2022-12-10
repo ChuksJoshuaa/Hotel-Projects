@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
   ManyToOne,
+  JoinColumn,
 } from "typeorm";
 import { HotelBrand } from "./HotelBrand";
 
@@ -64,7 +65,11 @@ export class Hotel extends BaseEntity {
   brandId: number;
 
   @Field(() => HotelBrand)
-  @ManyToOne(() => HotelBrand, (item) => item.brands)
+  @ManyToOne(() => HotelBrand, (item) => item.brands, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+  })
+  @JoinColumn({ name: "brand" })
   brand!: HotelBrand;
 
   @Field(() => String)

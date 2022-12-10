@@ -11,10 +11,11 @@ export const CREATE_HOTEL = gql`
       city
       address
       country
-      brandName
+      brandId
       authorId
       createdAt
       updatedAt
+      brandId
     }
   }
 `;

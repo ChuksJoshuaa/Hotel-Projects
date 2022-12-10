@@ -1,86 +1,92 @@
 import React, { useState } from "react";
-import { FaBlogger } from "react-icons/fa";
-import { CREATE_HOTEL } from "../mutations/createHotel";
-import { GET_HOTELS } from "../queries/hotels";
-import { GET_HOTEL_BRANDS } from "../queries/brands";
+import { FaEdit } from "react-icons/fa";
+import { UPDATE_HOTEL } from "../mutations/updateHotel";
+
 import { useMutation, useQuery } from "@apollo/client";
+import { SINGLE_HOTEL } from "../queries/singleHotel";
+import { useNavigate } from "react-router-dom";
+import { GET_HOTEL_BRANDS } from "../queries/brands";
 
-const AddHotel = () => {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [country, setCountry] = useState("");
-  const [image, setImage] = useState("");
-  const [price, setPrice] = useState("");
-  const [brandName, setBrandName] = useState("");
+interface IProps {
+  id: string;
+  item: any;
+}
 
-  const [createHotel] = useMutation(CREATE_HOTEL);
+const UpdateHotel = ({ id, item }: IProps) => {
+  const [name, setName] = useState(item.name);
+  const [description, setDescription] = useState(item.description);
+  const [address, setAddress] = useState(item.address);
+  const [city, setCity] = useState(item.city);
+  const [country, setCountry] = useState(item.country);
+  const [image, setImage] = useState(item.image);
+  const [price, setPrice] = useState(item.price);
+  const [brandName, setBrandName] = useState(item.brandName);
+  const navigate = useNavigate();
   const { data } = useQuery(GET_HOTEL_BRANDS);
+
+  const [updateHotel] = useMutation(UPDATE_HOTEL);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (
-      name === "" ||
-      description === "" ||
-      image === "" ||
-      price === "" ||
-      city === "" ||
-      address === "" ||
-      country === "" ||
-      brandName === ""
-    ) {
+    if (name === "") {
       return alert("Please fill in the field");
     }
 
-    let myPrice = parseInt(price);
+    let hotelId = parseInt(id);
 
-    createHotel({
+    updateHotel({
       variables: {
-        input: {
-          name: name,
-          description: description,
-          image: image,
-          price: myPrice,
-          address: address,
-          city: city,
-          country: country,
-          brandName: brandName,
-        },
+        id: hotelId,
+        name: name,
+        description: description,
+        address: address,
+        price: price,
+        city: city,
+        country: country,
+        brandName: brandName,
+        image: image,
       },
-      refetchQueries: [{ query: GET_HOTELS }],
+      onCompleted: () => navigate("/"),
+      refetchQueries: [{ query: SINGLE_HOTEL, variables: { id: hotelId } }],
     });
 
     setName("");
+    setDescription("");
+    setPrice("");
+    setCity("");
+    setImage("");
+    setCountry("");
+    setBrandName("");
+    setAddress("");
   };
 
   return (
     <>
       <button
         type="button"
-        className="btn btn-secondary"
+        className="btn btn-secondary mt-3 px-2"
         data-bs-toggle="modal"
-        data-bs-target="#addHotel"
+        data-bs-target="#updateHotel"
       >
         <div className="d-flex align-items-center">
-          <FaBlogger className="icon" />
-          <div>Add Hotel</div>
+          <FaEdit className="icon" />
+          <div>Update Brand</div>
         </div>
       </button>
 
       <div
         className="modal fade"
-        id="addHotel"
+        id="updateHotel"
         tabIndex={1}
-        aria-labelledby="addHotelModal"
+        aria-labelledby="updateHotelModel"
         aria-hidden="true"
       >
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h1 className="modal-title fs-5" id="addHotelModal">
-                Add Hotel
+              <h1 className="modal-title fs-5" id="updateHotelModel">
+                Update Hotel
               </h1>
               <button
                 type="button"
@@ -193,4 +199,4 @@ const AddHotel = () => {
   );
 };
 
-export default AddHotel;
+export default UpdateHotel;

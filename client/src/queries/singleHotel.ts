@@ -11,10 +11,11 @@ export const SINGLE_HOTEL = gql`
       city
       address
       country
-      brandName
       authorId
       createdAt
       updatedAt
+      brandId
+      brandName
     }
   }
 `;

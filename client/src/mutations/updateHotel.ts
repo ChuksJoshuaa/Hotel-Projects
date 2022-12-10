@@ -31,7 +31,7 @@ export const UPDATE_HOTEL = gql`
       city
       address
       country
-      brandName
+      brandId
       authorId
       createdAt
       updatedAt

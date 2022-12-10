@@ -12,6 +12,7 @@ import {
   Int,
 } from "type-graphql";
 import { HotelBrand } from "../entities/HotelBrand";
+// import { Hotel } from "../entities/Hotel";
 
 @InputType()
 class BrandInput {
@@ -59,6 +60,7 @@ export class HotelBrandResolver {
     }
     if (typeof name !== "undefined") {
       await HotelBrand.update({ id }, { name });
+      // await Hotel.find({ where: { name } });
     }
 
     return brand;
