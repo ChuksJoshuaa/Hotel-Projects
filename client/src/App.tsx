@@ -13,6 +13,11 @@ const cache = new InMemoryCache({
             return incoming;
           },
         },
+        brands: {
+          merge(existing, incoming) {
+            return incoming;
+          },
+        },
       },
     },
   },

@@ -124,3 +124,11 @@ code {
     display: none;
   }
 }
+
+.edit-btn {
+  font-size: 0.5rem;
+  margin-right: 1em;
+}
+.delete-btn {
+  font-size: 0.5rem;
+}

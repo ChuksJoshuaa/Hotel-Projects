@@ -25,7 +25,6 @@ exports.HotelBrandResolver = void 0;
 const Authenticated_1 = require("../middleware/Authenticated");
 const type_graphql_1 = require("type-graphql");
 const HotelBrand_1 = require("../entities/HotelBrand");
-const appDataSource_1 = require("../appDataSource");
 let BrandInput = class BrandInput {
 };
 __decorate([
@@ -36,18 +35,9 @@ BrandInput = __decorate([
     (0, type_graphql_1.InputType)()
 ], BrandInput);
 let HotelBrandResolver = class HotelBrandResolver {
-    brands(limit, cursor) {
+    brands() {
         return __awaiter(this, void 0, void 0, function* () {
-            const realLimit = Math.min(50, limit);
-            const qb = appDataSource_1.dataSource
-                .getRepository(HotelBrand_1.HotelBrand)
-                .createQueryBuilder("p")
-                .orderBy('"createdAt"', "DESC")
-                .take(realLimit);
-            if (cursor) {
-                qb.where('"createdAt < :cursor"', { cursor: new Date(parseInt(cursor)) });
-            }
-            return qb.getMany();
+            return HotelBrand_1.HotelBrand.find({});
         });
     }
     brand(id) {
@@ -80,10 +70,8 @@ let HotelBrandResolver = class HotelBrandResolver {
 };
 __decorate([
     (0, type_graphql_1.Query)(() => [HotelBrand_1.HotelBrand]),
-    __param(0, (0, type_graphql_1.Arg)("limit", () => type_graphql_1.Int)),
-    __param(1, (0, type_graphql_1.Arg)("cursor", () => String, { nullable: true })),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Object]),
+    __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], HotelBrandResolver.prototype, "brands", null);
 __decorate([
@@ -113,7 +101,7 @@ __decorate([
 ], HotelBrandResolver.prototype, "updateBrand", null);
 __decorate([
     (0, type_graphql_1.Mutation)(() => Boolean),
-    __param(0, (0, type_graphql_1.Arg)("id")),
+    __param(0, (0, type_graphql_1.Arg)("id", () => type_graphql_1.Int)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)

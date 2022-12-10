@@ -12,7 +12,6 @@ import {
   Int,
 } from "type-graphql";
 import { HotelBrand } from "../entities/HotelBrand";
-import { dataSource } from "../appDataSource";
 
 @InputType()
 class BrandInput {
@@ -23,20 +22,8 @@ class BrandInput {
 @Resolver(HotelBrand)
 export class HotelBrandResolver {
   @Query(() => [HotelBrand])
-  async brands(
-    @Arg("limit", () => Int) limit: number,
-    @Arg("cursor", () => String, { nullable: true }) cursor: string | null
-  ): Promise<HotelBrand[]> {
-    const realLimit = Math.min(50, limit);
-    const qb = dataSource
-      .getRepository(HotelBrand)
-      .createQueryBuilder("p")
-      .orderBy('"createdAt"', "DESC")
-      .take(realLimit);
-    if (cursor) {
-      qb.where('"createdAt < :cursor"', { cursor: new Date(parseInt(cursor)) });
-    }
-    return qb.getMany();
+  async brands(): Promise<HotelBrand[]> {
+    return HotelBrand.find({});
   }
 
   //Get single brand
@@ -79,7 +66,7 @@ export class HotelBrandResolver {
 
   //Delete Brand
   @Mutation(() => Boolean)
-  async deleteBrand(@Arg("id") id: number): Promise<boolean> {
+  async deleteBrand(@Arg("id", () => Int) id: number): Promise<boolean> {
     await HotelBrand.delete(id);
     return true;
   }
