@@ -16,8 +16,6 @@ const SinglePage: React.FC<IProps> = ({}) => {
     variables: { id: brandId },
   });
 
-  console.log(data);
-
   return (
     <div>
       <div>

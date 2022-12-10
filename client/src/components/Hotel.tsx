@@ -7,7 +7,6 @@ import { AddHotel } from "./index";
 const Hotel = () => {
   const { data } = useQuery(GET_HOTELS);
 
-  console.log(data);
   return (
     <div>
       <hr />
@@ -19,7 +18,7 @@ const Hotel = () => {
         <div>
           <div className="row">
             {data?.hotels.map((item: any) => (
-              <div className="col-sm-6">
+              <div className="col-sm-6" key={item.id}>
                 <div className="card mb-3">
                   <div className="card-body">
                     <img

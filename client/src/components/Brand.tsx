@@ -1,28 +1,23 @@
-import React, { useState } from "react";
-import { useQuery } from "@apollo/client";
-import { GET_HOTEL_BRANDS } from "../queries/brands";
-import { Link, useNavigate } from "react-router-dom";
-import { FaTrash, FaEdit } from "react-icons/fa";
-import { AddBrand, UpdateBrand } from "./index";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
+import React from "react";
+import { FaTrash } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import { DELETE_HOTEL_BRAND } from "../mutations/deleteBrand";
+import { GET_HOTEL_BRANDS } from "../queries/brands";
+import { AddBrand } from "./index";
 
 interface IProps {}
 
 const Brand: React.FC<IProps> = () => {
   const { data } = useQuery(GET_HOTEL_BRANDS);
 
-  const navigate = useNavigate();
   const [deleteBrand] = useMutation(DELETE_HOTEL_BRAND);
-  const [myId, setMyId] = useState("");
-
-  console.log(data);
 
   const DeleteBrand = (id: any) => {
     let brandId = parseInt(id);
     deleteBrand({
       variables: { id: brandId },
-      // onCompleted: () => navigate("/"),
+
       refetchQueries: [{ query: GET_HOTEL_BRANDS }],
     });
   };
