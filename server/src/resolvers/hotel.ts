@@ -141,7 +141,7 @@ export class HotelResolver {
 
   //Delete Hotel
   @Mutation(() => Boolean)
-  async deleteHotel(@Arg("id") id: number): Promise<boolean> {
+  async deleteHotel(@Arg("id", () => Int) id: number): Promise<boolean> {
     await Hotel.delete(id);
     return true;
   }

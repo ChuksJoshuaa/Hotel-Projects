@@ -1,11 +1,17 @@
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { FaTrash } from "react-icons/fa";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { UpdateHotel } from "../components";
+import { DELETE_HOTEL } from "../mutations/deleteHotel";
+import { GET_HOTELS } from "../queries/hotels";
 import { SINGLE_HOTEL } from "../queries/singleHotel";
 
 const SingleHotel = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+
+  const [deleteHotel] = useMutation(DELETE_HOTEL);
 
   let hotelId: string | any = id;
   hotelId = Number(hotelId);
@@ -13,6 +19,15 @@ const SingleHotel = () => {
   const { data, loading, error } = useQuery(SINGLE_HOTEL, {
     variables: { id: hotelId },
   });
+
+  const DeleteHotel = (id: any) => {
+    let hotelId = parseInt(id);
+    deleteHotel({
+      variables: { id: hotelId },
+      onCompleted: () => navigate("/"),
+      refetchQueries: [{ query: GET_HOTELS }],
+    });
+  };
 
   return (
     <div>
@@ -50,6 +65,16 @@ const SingleHotel = () => {
 
               <div className="d-flex gap-3 mb-4">
                 <UpdateHotel id={data.hotel.id} item={data.hotel} />
+                <button
+                  type="button"
+                  className="btn btn-danger mt-3 px-2"
+                  onClick={() => DeleteHotel(data.hotel.id)}
+                >
+                  <div className="d-flex align-items-center">
+                    <FaTrash className="icon" />
+                    <div>Delete Hotel</div>
+                  </div>
+                </button>
               </div>
             </div>
           )}
