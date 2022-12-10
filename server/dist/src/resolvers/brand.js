@@ -93,7 +93,7 @@ __decorate([
 __decorate([
     (0, type_graphql_1.Mutation)(() => HotelBrand_1.HotelBrand, { nullable: true }),
     (0, type_graphql_1.UseMiddleware)(Authenticated_1.Authenticated),
-    __param(0, (0, type_graphql_1.Arg)("id")),
+    __param(0, (0, type_graphql_1.Arg)("id", () => type_graphql_1.Int)),
     __param(1, (0, type_graphql_1.Arg)("name", () => String, { nullable: true })),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, String]),

@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/client";
 import { GET_HOTEL_BRANDS } from "../queries/brands";
 import { Link, useNavigate } from "react-router-dom";
 import { FaTrash, FaEdit } from "react-icons/fa";
-import { AddBrand } from "./index";
+import { AddBrand, UpdateBrand } from "./index";
 import { useMutation } from "@apollo/client";
 import { DELETE_HOTEL_BRAND } from "../mutations/deleteBrand";
 
@@ -38,7 +38,7 @@ const Brand: React.FC<IProps> = () => {
         {data?.brands.length > 0 ? (
           <div className="row mt-1">
             {data?.brands.map((item: any) => (
-              <div className="col-md-4">
+              <div className="col-md-4" key={item.id}>
                 <div className="card mb-3">
                   <div className="card-body shadow">
                     <div className="d-flex justify-content-between align-items center">
@@ -49,9 +49,8 @@ const Brand: React.FC<IProps> = () => {
                       </Link>
                     </div>
                     <div className="small d-flex">
-                      <button className="btn btn-sm btn-secondary edit-btn">
-                        <FaEdit />
-                      </button>
+                      <UpdateBrand id={item.id} />
+
                       <button
                         className="btn btn-sm btn-danger delete-btn"
                         onClick={() => DeleteBrand(item.id)}

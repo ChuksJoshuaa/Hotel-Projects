@@ -50,7 +50,7 @@ export class HotelBrandResolver {
   @Mutation(() => HotelBrand, { nullable: true })
   @UseMiddleware(Authenticated)
   async updateBrand(
-    @Arg("id") id: number,
+    @Arg("id", () => Int) id: number,
     @Arg("name", () => String, { nullable: true }) name: string
   ): Promise<HotelBrand | null> {
     const brand = await HotelBrand.findOne({ where: { id } });

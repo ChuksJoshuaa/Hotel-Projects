@@ -5,5 +5,6 @@ import Loader from "./Loader";
 import Hotel from "./Hotel";
 import Hero from "./Hero";
 import AddBrand from "./AddBrand";
+import UpdateBrand from "./UpdateBrand";
 
-export { Navbar, Sidebar, Loader, Brand, Hotel, Hero, AddBrand };
+export { Navbar, Sidebar, Loader, Brand, Hotel, Hero, AddBrand, UpdateBrand };
