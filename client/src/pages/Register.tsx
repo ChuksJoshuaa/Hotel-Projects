@@ -1,24 +1,26 @@
 import React, { useState } from "react";
 import { FaUser } from "react-icons/fa";
-// import { useLoginMutation } from "../generated/graphql";
-import { LOGIN } from "../mutations/login";
+// import { useRegisterMutation, MeQuery, MeDocument } from "../generated/graphql";
 import { useMutation } from "@apollo/client";
+import { REGISTER } from "../mutations/register";
 import { Loader } from "../components";
 import { ME } from "../queries/me";
 import { useNavigate } from "react-router-dom";
 
-interface LoginProps {}
+interface RegisterProps {}
 
-const Login: React.FC<LoginProps> = ({}) => {
+const Register: React.FC<RegisterProps> = ({}) => {
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [usernameError, setUsernameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [register] = useMutation(REGISTER);
   const [isLoading, setIsLoading] = useState(false);
   const [success, setSuccess] = useState("");
-  // const [, login] = useLoginMutation();
-  const [login] = useMutation(LOGIN);
+
   const navigate = useNavigate();
 
   const handleEnterKeyPress = (e: any) => {
@@ -30,11 +32,13 @@ const Login: React.FC<LoginProps> = ({}) => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+
     setIsLoading(true);
-    setSuccess("");
     setEmailError(false);
+    setUsernameError(false);
     setPasswordError(false);
     setErrors("");
+    setSuccess("");
 
     if (!email) {
       setErrors("This field is required");
@@ -56,6 +60,16 @@ const Login: React.FC<LoginProps> = ({}) => {
       setErrors("");
       setEmailError(false);
     }
+    if (!username) {
+      setErrors("This field is required");
+      setUsernameError(true);
+      return;
+    }
+
+    if (username) {
+      setErrors("");
+      setUsernameError(false);
+    }
 
     if (!password) {
       setErrors("This field is required");
@@ -68,31 +82,34 @@ const Login: React.FC<LoginProps> = ({}) => {
       setPasswordError(false);
     }
 
-    const response = await login({
+    const response = await register({
       variables: {
-        email: email,
-        password: password,
+        options: {
+          email: email,
+          username: username,
+          password: password,
+        },
       },
       refetchQueries: [{ query: ME }],
     });
 
     setEmail("");
+    setUsername("");
     setPassword("");
 
     if (response) {
       setIsLoading(false);
-      if (response?.data?.login?.errors === null) {
-        setSuccess("login was successful");
-        let userName = response?.data?.login?.user?.username;
+      if (response?.data?.register?.errors === null) {
+        setSuccess("user has been registered successfully");
+        let userName = response?.data?.register?.user?.username;
         localStorage.setItem("profile", JSON.stringify({ userName }));
         navigate("/");
       } else {
-        console.log(response?.data?.login?.errors);
-        setErrors("Invalid user details");
+        console.log(response?.data?.register?.errors);
+        setErrors("Invalid user or user email has already been taken");
       }
     }
   };
-
   return (
     <>
       <div className="container">
@@ -122,7 +139,19 @@ const Login: React.FC<LoginProps> = ({}) => {
               }}
             />
           </div>
-
+          <div className="mb-3">
+            <label className="form-label">Username</label>
+            <input
+              type="text"
+              id="username"
+              className="form-control"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              style={{
+                border: `${usernameError ? "1px solid crimson" : ""}`,
+              }}
+            />
+          </div>
           <div className="mb-3">
             <label className="form-label">Password</label>
             <input
@@ -142,11 +171,16 @@ const Login: React.FC<LoginProps> = ({}) => {
               onKeyDown={handleEnterKeyPress}
               className="btn btn-secondary"
               type="submit"
-              data-mdb-target="#myModal"
-              id="myModal"
               style={{ marginRight: "1em" }}
             >
               Submit
+            </button>
+            <button
+              data-bs-dismiss="modal"
+              className="btn btn-danger"
+              type="button"
+            >
+              close
             </button>
           </div>
         </form>
@@ -155,4 +189,4 @@ const Login: React.FC<LoginProps> = ({}) => {
   );
 };
 
-export default Login;
+export default Register;

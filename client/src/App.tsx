@@ -1,6 +1,6 @@
 import React from "react";
 import { Navbar, Sidebar } from "./components";
-import { Login, Home, SinglePage } from "./pages";
+import { Login, Home, SinglePage, Register } from "./pages";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
 
@@ -37,7 +37,8 @@ function App() {
           {/* {isOpen && <Sidebar />} */}
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/auth" element={<Login />} />
+            <Route path="/auth/login" element={<Login />} />
+            <Route path="/auth/register" element={<Register />} />
             <Route path="/hotel/:id" element={<SinglePage />} />
           </Routes>
         </Router>

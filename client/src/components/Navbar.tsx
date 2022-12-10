@@ -1,15 +1,29 @@
 import React from "react";
-import { Login, Register } from "./index";
 import { ME } from "../queries/me";
 import { useQuery } from "@apollo/client";
 import { FaUser } from "react-icons/fa";
+import { useMutation } from "@apollo/client";
+import { LOGOUT } from "../mutations/logout";
+import { Link, useNavigate } from "react-router-dom";
 
 interface NavbarProps {}
 
 const Navbar: React.FC<NavbarProps> = ({}) => {
   const { data } = useQuery(ME);
+  const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("profile") || "{}");
 
-  console.log(data);
+  const [logout] = useMutation(LOGOUT);
+
+  const logoutUser = () => {
+    logout({
+      variables: {},
+      refetchQueries: [{ query: ME }],
+    });
+    localStorage.clear();
+    navigate("/");
+  };
+
   const image =
     "https://res.cloudinary.com/chuksmbanaso/image/upload/v1639569930/media/User/images/dhotel_uaybwg.jpg";
   return (
@@ -22,15 +36,38 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
           </div>
         </a>
         {data ? (
-          !data.me ? (
+          !data.me || !user ? (
             <div className="d-flex gap-3">
-              <Login />
-              <Register />
+              <button type="button" className="btn btn-secondary">
+                <Link
+                  to="/auth/login"
+                  className="d-flex align-items-center text-white text-decoration-none"
+                >
+                  <FaUser className="icon" />
+                  <div>Login</div>
+                </Link>
+              </button>
+              <button type="button" className="btn btn-secondary">
+                <Link
+                  to="/auth/register"
+                  className="d-flex align-items-center text-white text-decoration-none"
+                >
+                  <FaUser className="icon" />
+                  <div>Register</div>
+                </Link>
+              </button>
             </div>
           ) : (
-            <div>
-              <FaUser className="text-danger" />{" "}
-              <span>{data?.me?.username}</span>
+            <div className="d-flex">
+              <div className="mt-1">
+                <FaUser className="text-danger" />{" "}
+                <span>{data?.me?.username}</span>
+              </div>
+              <div style={{ marginLeft: "1em" }}>
+                <button className="btn btn-danger" onClick={logoutUser}>
+                  Logout
+                </button>
+              </div>
             </div>
           )
         ) : null}
