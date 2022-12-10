@@ -28,7 +28,7 @@ const SinglePage: React.FC<IProps> = ({}) => {
               <h1 className="mt-3 font-weight-bold text-capitalize">
                 {data.brand.name}
               </h1>
-              {/* <p>{data.project.description}</p> */}
+
               <h5 className="mt-3">
                 Hotel Brand Name:
                 <span className="lead"> {data.brand.name}</span>
