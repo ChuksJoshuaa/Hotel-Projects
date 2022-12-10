@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { GET_HOTEL_BRANDS } from "../queries/brands";
 import { Link, useNavigate } from "react-router-dom";
@@ -10,10 +10,11 @@ import { DELETE_HOTEL_BRAND } from "../mutations/deleteBrand";
 interface IProps {}
 
 const Brand: React.FC<IProps> = () => {
-  const { data, error, loading } = useQuery(GET_HOTEL_BRANDS);
+  const { data } = useQuery(GET_HOTEL_BRANDS);
 
   const navigate = useNavigate();
   const [deleteBrand] = useMutation(DELETE_HOTEL_BRAND);
+  const [myId, setMyId] = useState("");
 
   console.log(data);
 
@@ -42,15 +43,16 @@ const Brand: React.FC<IProps> = () => {
                 <div className="card mb-3">
                   <div className="card-body shadow">
                     <div className="d-flex justify-content-between align-items center">
-                      <h5 className="card-title"> {item.name}</h5>
+                      <h5 className="card-title text-capitalize">
+                        {" "}
+                        {item.name}
+                      </h5>
 
                       <Link to={`brands/${item.id}`} className="btn btn-light">
                         <button className="btn btn-primary btn-sm">View</button>
                       </Link>
                     </div>
                     <div className="small d-flex">
-                      <UpdateBrand id={item.id} />
-
                       <button
                         className="btn btn-sm btn-danger delete-btn"
                         onClick={() => DeleteBrand(item.id)}

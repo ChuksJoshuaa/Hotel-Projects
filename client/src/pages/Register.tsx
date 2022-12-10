@@ -7,9 +7,7 @@ import { Loader } from "../components";
 import { ME } from "../queries/me";
 import { useNavigate } from "react-router-dom";
 
-interface RegisterProps {}
-
-const Register: React.FC<RegisterProps> = ({}) => {
+const Register = () => {
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState("");
   const [username, setUsername] = useState("");
@@ -23,14 +21,14 @@ const Register: React.FC<RegisterProps> = ({}) => {
 
   const navigate = useNavigate();
 
-  const handleEnterKeyPress = (e: any) => {
+  const handleEnterKeyPress = (e: React.KeyboardEvent) => {
     e.preventDefault();
-    if (e.key === "Enter" || e.keyCode === 13) {
+    if (e.key === "Enter" || e.code !== undefined) {
       handleSubmit(e);
     }
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     setIsLoading(true);

@@ -76,7 +76,7 @@ __decorate([
 ], HotelBrandResolver.prototype, "brands", null);
 __decorate([
     (0, type_graphql_1.Query)(() => HotelBrand_1.HotelBrand, { nullable: true }),
-    __param(0, (0, type_graphql_1.Arg)("id")),
+    __param(0, (0, type_graphql_1.Arg)("id", () => type_graphql_1.Int)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
@@ -101,6 +101,7 @@ __decorate([
 ], HotelBrandResolver.prototype, "updateBrand", null);
 __decorate([
     (0, type_graphql_1.Mutation)(() => Boolean),
+    (0, type_graphql_1.UseMiddleware)(Authenticated_1.Authenticated),
     __param(0, (0, type_graphql_1.Arg)("id", () => type_graphql_1.Int)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),

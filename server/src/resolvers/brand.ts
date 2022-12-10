@@ -28,7 +28,7 @@ export class HotelBrandResolver {
 
   //Get single brand
   @Query(() => HotelBrand, { nullable: true })
-  brand(@Arg("id") id: number): Promise<HotelBrand | null> {
+  brand(@Arg("id", () => Int) id: number): Promise<HotelBrand | null> {
     return HotelBrand.findOne({ where: { id } });
   }
 
@@ -66,6 +66,7 @@ export class HotelBrandResolver {
 
   //Delete Brand
   @Mutation(() => Boolean)
+  @UseMiddleware(Authenticated)
   async deleteBrand(@Arg("id", () => Int) id: number): Promise<boolean> {
     await HotelBrand.delete(id);
     return true;

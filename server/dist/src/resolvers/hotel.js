@@ -25,7 +25,6 @@ exports.HotelResolver = void 0;
 const Authenticated_1 = require("../middleware/Authenticated");
 const type_graphql_1 = require("type-graphql");
 const Hotel_1 = require("../entities/Hotel");
-const appDataSource_1 = require("../appDataSource");
 const HotelBrand_1 = require("../entities/HotelBrand");
 let HotelInput = class HotelInput {
 };
@@ -64,50 +63,18 @@ __decorate([
 HotelInput = __decorate([
     (0, type_graphql_1.InputType)()
 ], HotelInput);
-let PaginatedHotels = class PaginatedHotels {
-};
-__decorate([
-    (0, type_graphql_1.Field)(() => [Hotel_1.Hotel]),
-    __metadata("design:type", Array)
-], PaginatedHotels.prototype, "hotels", void 0);
-__decorate([
-    (0, type_graphql_1.Field)(),
-    __metadata("design:type", Boolean)
-], PaginatedHotels.prototype, "hasMore", void 0);
-PaginatedHotels = __decorate([
-    (0, type_graphql_1.ObjectType)()
-], PaginatedHotels);
 let HotelResolver = class HotelResolver {
     descriptionSnippet(root) {
         return root.description.slice(0, 100);
     }
-    hotels(limit, cursor) {
+    hotels() {
         return __awaiter(this, void 0, void 0, function* () {
-            const realLimit = Math.min(50, limit);
-            const realLimitPlusOne = realLimit + 1;
-            const replacements = [realLimitPlusOne];
-            if (cursor) {
-                replacements.push(new Date(parseInt(cursor)));
-            }
-            const hotels = yield appDataSource_1.dataSource.query(`
-        select p.*, 
-        json_build_object(
-          'id', u.id,
-          'username', u.username,
-          'email', u.email,
-          'createdAt', u."createdAt",
-          'updatedAt', u."updatedAt"
-          ) author
-        from hotel p
-        inner join public.user u on u.id = p."authorId"
-        ${cursor ? `where p."createdAt" < $2` : ""}
-        order by p."createdAt" DESC
-        limit $1    
-    `, replacements);
-            return {
-                hotels: hotels.slice(0, realLimit),
-                hasMore: hotels.length === realLimitPlusOne,
-            };
+            return Hotel_1.Hotel.find({});
+        });
+    }
+    filterHotels(brandName) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return Hotel_1.Hotel.find({ where: { brandName } });
         });
     }
     hotel(id) {
@@ -171,13 +138,18 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], HotelResolver.prototype, "descriptionSnippet", null);
 __decorate([
-    (0, type_graphql_1.Query)(() => PaginatedHotels),
-    __param(0, (0, type_graphql_1.Arg)("limit", () => type_graphql_1.Int)),
-    __param(1, (0, type_graphql_1.Arg)("cursor", () => String, { nullable: true })),
+    (0, type_graphql_1.Query)(() => [Hotel_1.Hotel]),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Object]),
+    __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], HotelResolver.prototype, "hotels", null);
+__decorate([
+    (0, type_graphql_1.Mutation)(() => [Hotel_1.Hotel]),
+    __param(0, (0, type_graphql_1.Arg)("brandName", () => String, { nullable: true })),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], HotelResolver.prototype, "filterHotels", null);
 __decorate([
     (0, type_graphql_1.Query)(() => Hotel_1.Hotel, { nullable: true }),
     __param(0, (0, type_graphql_1.Arg)("id", () => type_graphql_1.Int)),
@@ -196,7 +168,7 @@ __decorate([
 ], HotelResolver.prototype, "createHotel", null);
 __decorate([
     (0, type_graphql_1.Mutation)(() => Hotel_1.Hotel, { nullable: true }),
-    __param(0, (0, type_graphql_1.Arg)("id")),
+    __param(0, (0, type_graphql_1.Arg)("id", () => type_graphql_1.Int)),
     __param(1, (0, type_graphql_1.Arg)("name", () => String, { nullable: true })),
     __param(2, (0, type_graphql_1.Arg)("image", () => String, { nullable: true })),
     __param(3, (0, type_graphql_1.Arg)("city", () => String, { nullable: true })),

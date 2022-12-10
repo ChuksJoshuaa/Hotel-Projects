@@ -1,21 +1,13 @@
 import React, { useState } from "react";
-import { FaEdit } from "react-icons/fa";
-import { UPDATE_HOTEL_BRAND } from "../mutations/updateBrand";
-
+import { FaBlogger } from "react-icons/fa";
+import { CREATE_HOTEL_BRAND } from "../mutations/createBrand";
+import { GET_HOTEL_BRANDS } from "../queries/brands";
 import { useMutation } from "@apollo/client";
-import { SINGLE_BRAND } from "../queries/singleBrand";
-import { useNavigate } from "react-router-dom";
 
-interface IProps {
-  id: string;
-  item: string;
-}
+const AddHotel = () => {
+  const [name, setName] = useState("");
 
-const UpdateBrand = ({ id, item }: IProps) => {
-  const [name, setName] = useState(item);
-  const navigate = useNavigate();
-
-  const [updateBrand] = useMutation(UPDATE_HOTEL_BRAND);
+  const [createBrand] = useMutation(CREATE_HOTEL_BRAND);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,15 +16,13 @@ const UpdateBrand = ({ id, item }: IProps) => {
       return alert("Please fill in the field");
     }
 
-    let brandId = parseInt(id);
-
-    updateBrand({
+    createBrand({
       variables: {
-        id: brandId,
-        name: name,
+        input: {
+          name: name,
+        },
       },
-      onCompleted: () => navigate("/"),
-      refetchQueries: [{ query: SINGLE_BRAND, variables: { id: brandId } }],
+      refetchQueries: [{ query: GET_HOTEL_BRANDS }],
     });
 
     setName("");
@@ -42,28 +32,28 @@ const UpdateBrand = ({ id, item }: IProps) => {
     <>
       <button
         type="button"
-        className="btn btn-secondary mt-3 px-2"
+        className="btn btn-secondary"
         data-bs-toggle="modal"
-        data-bs-target="#updateBrand"
+        data-bs-target="#addHotel"
       >
         <div className="d-flex align-items-center">
-          <FaEdit className="icon" />
-          <div>Update Brand</div>
+          <FaBlogger className="icon" />
+          <div>Add Hotel</div>
         </div>
       </button>
 
       <div
         className="modal fade"
-        id="updateBrand"
+        id="addHotel"
         tabIndex={1}
-        aria-labelledby="updateBrandModal"
+        aria-labelledby="addHotelModal"
         aria-hidden="true"
       >
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h1 className="modal-title fs-5" id="updateBrandModal">
-                Update Brand
+              <h1 className="modal-title fs-5" id="addHotelModal">
+                Add Hotel
               </h1>
               <button
                 type="button"
@@ -75,7 +65,7 @@ const UpdateBrand = ({ id, item }: IProps) => {
             <div className="modal-body">
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
-                  <label className="form-label">Brand Name</label>
+                  <label className="form-label">Hotel Name</label>
                   <input
                     type="text"
                     id="name"
@@ -101,4 +91,4 @@ const UpdateBrand = ({ id, item }: IProps) => {
   );
 };
 
-export default UpdateBrand;
+export default AddHotel;
