@@ -16,7 +16,7 @@ const Hotel = () => {
       <div className="d-flex justify-content-between align-items-center">
         <h1 className="text-capitalize font-weight-bold fs-3 mt-3">Hotels</h1>
         <Link to={`${checkUser > 0 ? "/add-hotel" : "/auth/login"}`}>
-          <button type="button" className="btn btn-primary">
+          <button type="button" className="btn btn-outline-primary">
             <div className="d-flex align-items-center">
               <FaChurch className="icon" />
               <div>Add Hotel</div>

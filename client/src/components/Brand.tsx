@@ -29,7 +29,7 @@ const Brand: React.FC<IProps> = () => {
           Hotel Brands
         </h1>
         <Link to={`${checkUser > 0 ? "/add-brand" : "/auth/login"}`}>
-          <button type="button" className="btn btn-secondary">
+          <button type="button" className="btn btn-outline-secondary">
             <div className="d-flex align-items-center">
               <FaBlogger className="icon" />
               <div>Add Brand</div>
