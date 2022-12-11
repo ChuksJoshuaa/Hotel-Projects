@@ -51,7 +51,9 @@ const Brand: React.FC<IProps> = () => {
                       </h5>
 
                       <Link to={`brands/${item.id}`} className="btn btn-light">
-                        <button className="btn btn-primary btn-sm">View</button>
+                        <button className="btn btn-outline-primary btn-sm">
+                          Details
+                        </button>
                       </Link>
                     </div>
                     <div className="small d-flex">

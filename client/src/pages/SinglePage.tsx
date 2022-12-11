@@ -34,6 +34,14 @@ const SinglePage: React.FC<IProps> = ({}) => {
                 <span className="lead"> {data.brand.name}</span>
               </h5>
 
+              <div className="d-flex align-items-center mt-2">
+                <h4 style={{ marginRight: "0.5em", marginTop: "0.4em" }}>
+                  Check hotels under this brand. Click
+                </h4>
+                <Link to={`/filtered-hotels/${data.brand.id}`}>
+                  <button className="btn btn-sm btn-primary">Here</button>
+                </Link>
+              </div>
               <div className="d-flex gap-3 mb-4">
                 <UpdateBrand id={data.brand.id} item={data.brand.name} />
               </div>

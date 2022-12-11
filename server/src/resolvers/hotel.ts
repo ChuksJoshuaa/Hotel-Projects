@@ -55,11 +55,11 @@ export class HotelResolver {
     return Hotel.find({});
   }
 
-  @Mutation(() => [Hotel])
+  @Query(() => [Hotel])
   async filterHotels(
-    @Arg("brandName", () => String, { nullable: true }) brandName: string
+    @Arg("brandId", () => Int, { nullable: true }) brandId: number
   ): Promise<Hotel[]> {
-    return Hotel.find({ where: { brandName } });
+    return Hotel.find({ where: { brandId } });
   }
 
   //Get single hotel by id

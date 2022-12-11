@@ -72,9 +72,9 @@ let HotelResolver = class HotelResolver {
             return Hotel_1.Hotel.find({});
         });
     }
-    filterHotels(brandName) {
+    filterHotels(brandId) {
         return __awaiter(this, void 0, void 0, function* () {
-            return Hotel_1.Hotel.find({ where: { brandName } });
+            return Hotel_1.Hotel.find({ where: { brandId } });
         });
     }
     hotel(id) {
@@ -147,10 +147,10 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], HotelResolver.prototype, "hotels", null);
 __decorate([
-    (0, type_graphql_1.Mutation)(() => [Hotel_1.Hotel]),
-    __param(0, (0, type_graphql_1.Arg)("brandName", () => String, { nullable: true })),
+    (0, type_graphql_1.Query)(() => [Hotel_1.Hotel]),
+    __param(0, (0, type_graphql_1.Arg)("brandId", () => type_graphql_1.Int, { nullable: true })),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], HotelResolver.prototype, "filterHotels", null);
 __decorate([

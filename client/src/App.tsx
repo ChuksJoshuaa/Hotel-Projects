@@ -8,6 +8,7 @@ import {
   SingleHotel,
   AddHotel,
   AddBrand,
+  FilteredHotels,
 } from "./pages";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
@@ -56,6 +57,7 @@ function App() {
             <Route path="/brands/:id" element={<SinglePage />} />
             <Route path="/add-hotel" element={<AddHotel />} />
             <Route path="/add-brand" element={<AddBrand />} />
+            <Route path="/filtered-hotels/:id" element={<FilteredHotels />} />
           </Routes>
         </Router>
       </div>
