@@ -93,7 +93,7 @@ const Login = () => {
 
   return (
     <>
-      <div className="container">
+      <div className="container home">
         {isLoading ? (
           <Loader />
         ) : (

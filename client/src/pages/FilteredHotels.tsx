@@ -15,14 +15,14 @@ const FilteredHotels = () => {
 
   if (error || data?.filterHotels.length === 0) {
     return (
-      <div className="container">
+      <div className="container home">
         <h3>No hotels is associated with this brand. Create one</h3>
       </div>
     );
   }
 
   return (
-    <div className="container">
+    <div className="container home">
       <hr />
       <div className="d-flex justify-content-between align-items-center">
         <h1 className="text-capitalize font-weight-bold fs-3 mt-3">

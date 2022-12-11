@@ -1,9 +1,9 @@
 import React from "react";
-import { Navbar, Sidebar } from "./components";
+import { Navbar, Sidebar, Footer } from "./components";
 import {
   Login,
   Home,
-  SinglePage,
+  SingleBrand,
   Register,
   SingleHotel,
   AddHotel,
@@ -54,11 +54,12 @@ function App() {
             <Route path="/auth/login" element={<Login />} />
             <Route path="/auth/register" element={<Register />} />
             <Route path="/hotels/:id" element={<SingleHotel />} />
-            <Route path="/brands/:id" element={<SinglePage />} />
+            <Route path="/brands/:id" element={<SingleBrand />} />
             <Route path="/add-hotel" element={<AddHotel />} />
             <Route path="/add-brand" element={<AddBrand />} />
             <Route path="/filtered-hotels/:id" element={<FilteredHotels />} />
           </Routes>
+          <Footer />
         </Router>
       </div>
     </ApolloProvider>

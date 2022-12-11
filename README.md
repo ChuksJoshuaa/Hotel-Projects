@@ -75,6 +75,28 @@ query Hotel($id: Int!) {
 
 ```
 
+### Get filtered hotels by brand
+
+```
+query FilterHotels($brandId: Int!) {
+    filterHotels(brandId: $brandId) {
+      id
+      name
+      description
+      image
+      price
+      city
+      address
+      country
+      authorId
+      createdAt
+      updatedAt
+      brandId
+    }
+  }
+
+```
+
 ##Mutations
 
 ### Create a new brand

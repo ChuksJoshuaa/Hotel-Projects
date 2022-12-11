@@ -72,7 +72,7 @@ const AddHotel = () => {
   };
 
   return (
-    <>
+    <div className="home">
       <div className="container mt-2">
         <p className="text-center text-danger fs-3 mb-1 font-weight-semibold">
           {errors}
@@ -171,7 +171,7 @@ const AddHotel = () => {
           </button>
         </form>
       </div>
-    </>
+    </div>
   );
 };
 

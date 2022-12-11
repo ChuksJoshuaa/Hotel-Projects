@@ -6,7 +6,7 @@ import { SINGLE_BRAND } from "../queries/singleBrand";
 
 interface IProps {}
 
-const SinglePage: React.FC<IProps> = ({}) => {
+const SingleBrand: React.FC<IProps> = ({}) => {
   const { id } = useParams();
 
   let brandId: string | any = id;
@@ -53,4 +53,4 @@ const SinglePage: React.FC<IProps> = ({}) => {
   );
 };
 
-export default SinglePage;
+export default SingleBrand;

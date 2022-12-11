@@ -8,12 +8,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { GET_HOTELS } from "../queries/hotels";
 import { GET_HOTEL_BRANDS } from "../queries/brands";
 
-interface NavbarProps {}
-
-const Navbar: React.FC<NavbarProps> = ({}) => {
-  const { data } = useQuery(ME);
+const Navbar = () => {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("profile") || "{}");
+  const userName = user?.userName;
   const checkUser = Object.keys(user).length;
 
   const [logout] = useMutation(LOGOUT);
@@ -43,42 +41,39 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
             <h1 className="title font-weight-bold">Hotel Suite</h1>
           </div>
         </a>
-        {data ? (
-          !data.me || checkUser === 0 ? (
-            <div className="d-flex gap-3">
-              <button type="button" className="btn btn-secondary">
-                <Link
-                  to="/auth/login"
-                  className="d-flex align-items-center text-white text-decoration-none"
-                >
-                  <FaUser className="icon" />
-                  <div>Login</div>
-                </Link>
-              </button>
-              <button type="button" className="btn btn-secondary">
-                <Link
-                  to="/auth/register"
-                  className="d-flex align-items-center text-white text-decoration-none"
-                >
-                  <FaUser className="icon" />
-                  <div>Register</div>
-                </Link>
+        {checkUser === 0 ? (
+          <div className="d-flex gap-3">
+            <button type="button" className="btn btn-secondary">
+              <Link
+                to="/auth/login"
+                className="d-flex align-items-center text-white text-decoration-none"
+              >
+                <FaUser className="icon" />
+                <div>Login</div>
+              </Link>
+            </button>
+            <button type="button" className="btn btn-secondary">
+              <Link
+                to="/auth/register"
+                className="d-flex align-items-center text-white text-decoration-none"
+              >
+                <FaUser className="icon" />
+                <div>Register</div>
+              </Link>
+            </button>
+          </div>
+        ) : (
+          <div className="d-flex">
+            <div className="mt-1">
+              <FaUser className="text-danger" /> <span>{userName}</span>
+            </div>
+            <div style={{ marginLeft: "1em" }}>
+              <button className="btn btn-danger" onClick={logoutUser}>
+                Logout
               </button>
             </div>
-          ) : (
-            <div className="d-flex">
-              <div className="mt-1">
-                <FaUser className="text-danger" />{" "}
-                <span>{data?.me?.username}</span>
-              </div>
-              <div style={{ marginLeft: "1em" }}>
-                <button className="btn btn-danger" onClick={logoutUser}>
-                  Logout
-                </button>
-              </div>
-            </div>
-          )
-        ) : null}
+          </div>
+        )}
       </div>
     </nav>
   );

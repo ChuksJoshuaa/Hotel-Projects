@@ -1,5 +1,5 @@
 import Home from "./Home";
-import SinglePage from "./SinglePage";
+import SingleBrand from "./SingleBrand";
 import Login from "./Login";
 import Register from "./Register";
 import SingleHotel from "./SingleHotel";
@@ -9,7 +9,7 @@ import FilteredHotels from "./FilteredHotels";
 
 export {
   Home,
-  SinglePage,
+  SingleBrand,
   Login,
   Register,
   SingleHotel,

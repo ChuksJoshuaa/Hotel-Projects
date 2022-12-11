@@ -34,7 +34,7 @@ const AddBrand = () => {
   };
 
   return (
-    <>
+    <div className="home">
       <div className="container">
         <p className="text-center text-danger fs-3 mb-1 font-weight-semibold">
           {errors}
@@ -56,7 +56,7 @@ const AddBrand = () => {
           </button>
         </form>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -109,7 +109,7 @@ const Register = () => {
     }
   };
   return (
-    <>
+    <div className="home">
       <div className="container">
         {isLoading ? (
           <Loader />
@@ -183,7 +183,7 @@ const Register = () => {
           </div>
         </form>
       </div>
-    </>
+    </div>
   );
 };
 
