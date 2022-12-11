@@ -83,6 +83,9 @@ let HotelResolver = class HotelResolver {
     createHotel(input, { req }) {
         return __awaiter(this, void 0, void 0, function* () {
             let authorUserId = req.session.userId;
+            if (!authorUserId) {
+                throw new Error("you must be logged in");
+            }
             const brandHotel = yield HotelBrand_1.HotelBrand.findOne({
                 where: { name: input.brandName },
             });

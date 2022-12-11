@@ -1,16 +1,16 @@
 import { useMutation, useQuery } from "@apollo/client";
 import React from "react";
-import { FaTrash } from "react-icons/fa";
+import { FaBlogger, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { DELETE_HOTEL_BRAND } from "../mutations/deleteBrand";
 import { GET_HOTEL_BRANDS } from "../queries/brands";
-import { AddBrand } from "./index";
 
 interface IProps {}
 
 const Brand: React.FC<IProps> = () => {
   const { data } = useQuery(GET_HOTEL_BRANDS);
-
+  const user = JSON.parse(localStorage.getItem("profile") || "{}");
+  const checkUser = Object.keys(user).length;
   const [deleteBrand] = useMutation(DELETE_HOTEL_BRAND);
 
   const DeleteBrand = (id: any) => {
@@ -28,7 +28,14 @@ const Brand: React.FC<IProps> = () => {
         <h1 className="text-capitalize font-weight-bold fs-3 mt-3">
           Hotel Brands
         </h1>
-        <AddBrand />
+        <Link to={`${checkUser > 0 ? "/add-brand" : "/auth/login"}`}>
+          <button type="button" className="btn btn-secondary">
+            <div className="d-flex align-items-center">
+              <FaBlogger className="icon" />
+              <div>Add Brand</div>
+            </div>
+          </button>
+        </Link>
       </div>
       <div>
         {data?.brands.length > 0 ? (

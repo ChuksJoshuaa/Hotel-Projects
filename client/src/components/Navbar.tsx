@@ -5,6 +5,8 @@ import { FaUser } from "react-icons/fa";
 import { useMutation } from "@apollo/client";
 import { LOGOUT } from "../mutations/logout";
 import { Link, useNavigate } from "react-router-dom";
+import { GET_HOTELS } from "../queries/hotels";
+import { GET_HOTEL_BRANDS } from "../queries/brands";
 
 interface NavbarProps {}
 
@@ -12,13 +14,19 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
   const { data } = useQuery(ME);
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("profile") || "{}");
+  const checkUser = Object.keys(user).length;
 
   const [logout] = useMutation(LOGOUT);
 
   const logoutUser = () => {
     logout({
       variables: {},
-      refetchQueries: [{ query: ME }],
+      onCompleted: () => navigate("/"),
+      refetchQueries: [
+        { query: ME },
+        { query: GET_HOTELS },
+        { query: GET_HOTEL_BRANDS },
+      ],
     });
     localStorage.clear();
     navigate("/");
@@ -36,7 +44,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
           </div>
         </a>
         {data ? (
-          !data.me || !user ? (
+          !data.me || checkUser === 0 ? (
             <div className="d-flex gap-3">
               <button type="button" className="btn btn-secondary">
                 <Link

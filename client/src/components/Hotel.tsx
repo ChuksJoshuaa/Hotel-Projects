@@ -2,17 +2,27 @@ import React from "react";
 import { useQuery } from "@apollo/client";
 import { GET_HOTELS } from "../queries/hotels";
 import { Link } from "react-router-dom";
-import { AddHotel } from "./index";
+import { FaChurch } from "react-icons/fa";
 
 const Hotel = () => {
   const { data } = useQuery(GET_HOTELS);
+  const user = JSON.parse(localStorage.getItem("profile") || "{}");
+
+  const checkUser = Object.keys(user).length;
 
   return (
     <div>
       <hr />
       <div className="d-flex justify-content-between align-items-center">
-        <h1 className="text-capitalize font-weight-bold fs-3 mt-3">Hotel</h1>
-        <AddHotel />
+        <h1 className="text-capitalize font-weight-bold fs-3 mt-3">Hotels</h1>
+        <Link to={`${checkUser > 0 ? "/add-hotel" : "/auth/login"}`}>
+          <button type="button" className="btn btn-primary">
+            <div className="d-flex align-items-center">
+              <FaChurch className="icon" />
+              <div>Add Hotel</div>
+            </div>
+          </button>
+        </Link>
       </div>
       {data?.hotels.length > 0 ? (
         <div>

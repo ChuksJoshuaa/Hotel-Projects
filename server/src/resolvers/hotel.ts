@@ -76,6 +76,10 @@ export class HotelResolver {
     @Ctx() { req }: MyContext
   ): Promise<Hotel> {
     let authorUserId = req.session.userId;
+
+    if (!authorUserId) {
+      throw new Error("you must be logged in");
+    }
     const brandHotel = await HotelBrand.findOne({
       where: { name: input.brandName },
     });

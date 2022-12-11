@@ -1,6 +1,14 @@
 import React from "react";
 import { Navbar, Sidebar } from "./components";
-import { Login, Home, SinglePage, Register, SingleHotel } from "./pages";
+import {
+  Login,
+  Home,
+  SinglePage,
+  Register,
+  SingleHotel,
+  AddHotel,
+  AddBrand,
+} from "./pages";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
 
@@ -46,6 +54,8 @@ function App() {
             <Route path="/auth/register" element={<Register />} />
             <Route path="/hotels/:id" element={<SingleHotel />} />
             <Route path="/brands/:id" element={<SinglePage />} />
+            <Route path="/add-hotel" element={<AddHotel />} />
+            <Route path="/add-brand" element={<AddBrand />} />
           </Routes>
         </Router>
       </div>

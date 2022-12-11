@@ -177,7 +177,9 @@ const UpdateHotel = ({ id, item }: IProps) => {
                   >
                     {data?.brands.length > 0
                       ? data?.brands.map((item: any) => (
-                          <option value={item.name}>{item.name}</option>
+                          <option value={item.name} key={item.id}>
+                            {item.name}
+                          </option>
                         ))
                       : null}
                   </select>
