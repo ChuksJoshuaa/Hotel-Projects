@@ -35,9 +35,16 @@ const main = async () => {
   app.use(cookieParser());
 
   const redis = new Redis(process.env.REDIS_URL as any);
+
   // const redis = new Redis();
   app.set("trust proxy", 1);
-  app.use(cors({ origin: process.env.CORS_ORIGIN, credentials: true }));
+  app.use(
+    cors({
+      origin: process.env.CORS_ORIGIN,
+      // origin: process.env.CORS_ORIGIN1,
+      credentials: true,
+    })
+  );
 
   app.use(
     session({

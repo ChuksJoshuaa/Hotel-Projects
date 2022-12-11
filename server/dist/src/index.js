@@ -43,7 +43,10 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     app.use((0, cookie_parser_1.default)());
     const redis = new ioredis_1.default(process.env.REDIS_URL);
     app.set("trust proxy", 1);
-    app.use((0, cors_1.default)({ origin: process.env.CORS_ORIGIN, credentials: true }));
+    app.use((0, cors_1.default)({
+        origin: process.env.CORS_ORIGIN,
+        credentials: true,
+    }));
     app.use((0, express_session_1.default)({
         secret: secret_key || "",
         name: constant_1.COOKIE_NAME,
