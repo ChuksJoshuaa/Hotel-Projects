@@ -1,6 +1,6 @@
 # Hotel Full Stack Web Application
 
-<img src="https://res.cloudinary.com/chuksmbanaso/image/upload/v1670734158/media/User/images/Screenshot_293_qmka1f.png" title="icon" alt="icon">
+<img src="https://res.cloudinary.com/chuksmbanaso/image/upload/v1670736915/media/User/images/Screenshot_295_jy160t.png" title="icon" alt="icon">
 ## GraphQL Queries & Mutations
 
 ## Queries
