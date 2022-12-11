@@ -51,7 +51,9 @@ const Hotel = () => {
             ))}
           </div>
         </div>
-      ) : null}
+      ) : (
+        <div>No hotels is available now. Login and Create one</div>
+      )}
     </div>
   );
 };
