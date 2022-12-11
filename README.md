@@ -2,6 +2,8 @@
 
 ## GraphQL Queries & Mutations
 
+## Queries
+
 ### Get names of all brands
 
 ```
@@ -71,6 +73,8 @@ query Hotel($id: Int!) {
   }
 
 ```
+
+##Mutations
 
 ### Create a new brand
 
