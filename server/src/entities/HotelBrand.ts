@@ -21,14 +21,17 @@ export class HotelBrand extends BaseEntity {
   id!: number;
 
   @Field()
-  @Column()
+  @Column({ unique: true })
   name!: string;
 
   @Field()
   @Column()
   authorId!: number;
 
-  @OneToMany(() => Hotel, (item) => item.brand)
+  @OneToMany(() => Hotel, (item) => item.brand, {
+    onUpdate: "CASCADE",
+    // onDelete: "CASCADE",
+  })
   brands: Hotel[];
 
   @Field(() => User)

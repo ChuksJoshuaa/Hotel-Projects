@@ -12,7 +12,7 @@ import {
   Int,
 } from "type-graphql";
 import { HotelBrand } from "../entities/HotelBrand";
-import { dataSource } from "../appDataSource";
+// import { Hotel } from "../entities/Hotel";
 
 @InputType()
 class BrandInput {
@@ -23,25 +23,13 @@ class BrandInput {
 @Resolver(HotelBrand)
 export class HotelBrandResolver {
   @Query(() => [HotelBrand])
-  async brands(
-    @Arg("limit", () => Int) limit: number,
-    @Arg("cursor", () => String, { nullable: true }) cursor: string | null
-  ): Promise<HotelBrand[]> {
-    const realLimit = Math.min(50, limit);
-    const qb = dataSource
-      .getRepository(HotelBrand)
-      .createQueryBuilder("p")
-      .orderBy('"createdAt"', "DESC")
-      .take(realLimit);
-    if (cursor) {
-      qb.where('"createdAt < :cursor"', { cursor: new Date(parseInt(cursor)) });
-    }
-    return qb.getMany();
+  async brands(): Promise<HotelBrand[]> {
+    return HotelBrand.find({});
   }
 
   //Get single brand
   @Query(() => HotelBrand, { nullable: true })
-  brand(@Arg("id") id: number): Promise<HotelBrand | null> {
+  brand(@Arg("id", () => Int) id: number): Promise<HotelBrand | null> {
     return HotelBrand.findOne({ where: { id } });
   }
 
@@ -63,7 +51,7 @@ export class HotelBrandResolver {
   @Mutation(() => HotelBrand, { nullable: true })
   @UseMiddleware(Authenticated)
   async updateBrand(
-    @Arg("id") id: number,
+    @Arg("id", () => Int) id: number,
     @Arg("name", () => String, { nullable: true }) name: string
   ): Promise<HotelBrand | null> {
     const brand = await HotelBrand.findOne({ where: { id } });
@@ -72,6 +60,7 @@ export class HotelBrandResolver {
     }
     if (typeof name !== "undefined") {
       await HotelBrand.update({ id }, { name });
+      // await Hotel.find({ where: { name } });
     }
 
     return brand;
@@ -79,7 +68,8 @@ export class HotelBrandResolver {
 
   //Delete Brand
   @Mutation(() => Boolean)
-  async deleteBrand(@Arg("id") id: number): Promise<boolean> {
+  @UseMiddleware(Authenticated)
+  async deleteBrand(@Arg("id", () => Int) id: number): Promise<boolean> {
     await HotelBrand.delete(id);
     return true;
   }

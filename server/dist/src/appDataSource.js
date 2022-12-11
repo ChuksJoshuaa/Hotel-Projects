@@ -13,12 +13,8 @@ const User_1 = require("./entities/User");
 const portNumber = Number(process.env.DATABASE_PORT);
 exports.dataSource = new typeorm_1.DataSource({
     type: "postgres",
-    host: "localhost",
+    url: process.env.DATABASE_URL,
     port: portNumber,
-    username: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASSWORD,
-    database: process.env.DATABASE_NAME,
-    synchronize: true,
     logging: true,
     migrations: [path_1.default.join(__dirname, "./migrations/*")],
     entities: [Hotel_1.Hotel, User_1.User, HotelBrand_1.HotelBrand],

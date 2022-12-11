@@ -1,6 +1,16 @@
 import React from "react";
-import { Navbar, Sidebar } from "./components";
-import { Login, Home, SinglePage } from "./pages";
+import { Navbar, Sidebar, Footer } from "./components";
+import {
+  Login,
+  Home,
+  SingleBrand,
+  Register,
+  SingleHotel,
+  AddHotel,
+  AddBrand,
+  FilteredHotels,
+  ErrorPage,
+} from "./pages";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
 
@@ -9,6 +19,11 @@ const cache = new InMemoryCache({
     Query: {
       fields: {
         me: {
+          merge(existing, incoming) {
+            return incoming;
+          },
+        },
+        brands: {
           merge(existing, incoming) {
             return incoming;
           },
@@ -22,6 +37,11 @@ const client = new ApolloClient({
   uri: "http://localhost:5000/graphql",
   cache,
   credentials: "include",
+  // headers: {
+  //   cookie:
+  //     (typeof window === "undefined" ? ctx?.req?.headers.cookie : undefined) ||
+  //     "",
+  // },
 });
 
 function App() {
@@ -37,9 +57,16 @@ function App() {
           {/* {isOpen && <Sidebar />} */}
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/auth" element={<Login />} />
-            <Route path="/hotel/:id" element={<SinglePage />} />
+            <Route path="/auth/login" element={<Login />} />
+            <Route path="/auth/register" element={<Register />} />
+            <Route path="/hotels/:id" element={<SingleHotel />} />
+            <Route path="/brands/:id" element={<SingleBrand />} />
+            <Route path="/add-hotel" element={<AddHotel />} />
+            <Route path="/add-brand" element={<AddBrand />} />
+            <Route path="*" element={<ErrorPage />} />
+            <Route path="/filtered-hotels/:id" element={<FilteredHotels />} />
           </Routes>
+          <Footer />
         </Router>
       </div>
     </ApolloProvider>

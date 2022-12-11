@@ -83,7 +83,11 @@ __decorate([
 ], Hotel.prototype, "brandId", void 0);
 __decorate([
     (0, type_graphql_1.Field)(() => HotelBrand_1.HotelBrand),
-    (0, typeorm_1.ManyToOne)(() => HotelBrand_1.HotelBrand, (item) => item.brands),
+    (0, typeorm_1.ManyToOne)(() => HotelBrand_1.HotelBrand, (item) => item.brands, {
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+    }),
+    (0, typeorm_1.JoinColumn)({ name: "brand" }),
     __metadata("design:type", HotelBrand_1.HotelBrand)
 ], Hotel.prototype, "brand", void 0);
 __decorate([

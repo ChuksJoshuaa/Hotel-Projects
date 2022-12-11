@@ -1,11 +1,10 @@
 import React from "react";
+import { Hero } from "../components";
 
-interface IProps {}
-
-const Home: React.FC<IProps> = ({}) => {
+const Home = () => {
   return (
-    <div>
-      <div>Home</div>
+    <div className="home">
+      <Hero />
     </div>
   );
 };

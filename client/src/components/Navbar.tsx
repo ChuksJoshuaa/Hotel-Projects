@@ -1,15 +1,35 @@
 import React from "react";
-import { Login, Register } from "./index";
 import { ME } from "../queries/me";
 import { useQuery } from "@apollo/client";
 import { FaUser } from "react-icons/fa";
+import { useMutation } from "@apollo/client";
+import { LOGOUT } from "../mutations/logout";
+import { Link, useNavigate } from "react-router-dom";
+import { GET_HOTELS } from "../queries/hotels";
+import { GET_HOTEL_BRANDS } from "../queries/brands";
 
-interface NavbarProps {}
+const Navbar = () => {
+  const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem("profile") || "{}");
+  const userName = user?.userName;
+  const checkUser = Object.keys(user).length;
 
-const Navbar: React.FC<NavbarProps> = ({}) => {
-  const { data } = useQuery(ME);
+  const [logout] = useMutation(LOGOUT);
 
-  console.log(data);
+  const logoutUser = () => {
+    logout({
+      variables: {},
+      onCompleted: () => navigate("/"),
+      refetchQueries: [
+        { query: ME },
+        { query: GET_HOTELS },
+        { query: GET_HOTEL_BRANDS },
+      ],
+    });
+    localStorage.clear();
+    navigate("/");
+  };
+
   const image =
     "https://res.cloudinary.com/chuksmbanaso/image/upload/v1639569930/media/User/images/dhotel_uaybwg.jpg";
   return (
@@ -21,19 +41,39 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
             <h1 className="title font-weight-bold">Hotel Suite</h1>
           </div>
         </a>
-        {data ? (
-          !data.me ? (
-            <div className="d-flex gap-3">
-              <Login />
-              <Register />
+        {checkUser === 0 ? (
+          <div className="d-flex gap-3">
+            <button type="button" className="btn btn-secondary">
+              <Link
+                to="/auth/login"
+                className="d-flex align-items-center text-white text-decoration-none"
+              >
+                <FaUser className="icon" />
+                <div>Login</div>
+              </Link>
+            </button>
+            <button type="button" className="btn btn-secondary">
+              <Link
+                to="/auth/register"
+                className="d-flex align-items-center text-white text-decoration-none"
+              >
+                <FaUser className="icon" />
+                <div>Register</div>
+              </Link>
+            </button>
+          </div>
+        ) : (
+          <div className="d-flex">
+            <div className="mt-1">
+              <FaUser className="text-danger" /> <span>{userName}</span>
             </div>
-          ) : (
-            <div>
-              <FaUser className="text-danger" />{" "}
-              <span>{data?.me?.username}</span>
+            <div style={{ marginLeft: "1em" }}>
+              <button className="btn btn-danger" onClick={logoutUser}>
+                Logout
+              </button>
             </div>
-          )
-        ) : null}
+          </div>
+        )}
       </div>
     </nav>
   );

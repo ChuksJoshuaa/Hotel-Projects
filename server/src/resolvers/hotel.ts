@@ -12,10 +12,8 @@ import {
   Int,
   FieldResolver,
   Root,
-  ObjectType,
 } from "type-graphql";
 import { Hotel } from "../entities/Hotel";
-import { dataSource } from "../appDataSource";
 import { HotelBrand } from "../entities/HotelBrand";
 
 @InputType()
@@ -45,14 +43,6 @@ class HotelInput {
   image: string;
 }
 
-@ObjectType()
-class PaginatedHotels {
-  @Field(() => [Hotel])
-  hotels: Hotel[];
-  @Field()
-  hasMore: boolean;
-}
-
 @Resolver(Hotel)
 export class HotelResolver {
   @FieldResolver(() => String)
@@ -60,43 +50,16 @@ export class HotelResolver {
     return root.description.slice(0, 100);
   }
 
-  @Query(() => PaginatedHotels)
-  async hotels(
-    @Arg("limit", () => Int) limit: number,
-    @Arg("cursor", () => String, { nullable: true }) cursor: string | null
-  ): Promise<PaginatedHotels> {
-    const realLimit = Math.min(50, limit);
-    const realLimitPlusOne = realLimit + 1;
+  @Query(() => [Hotel])
+  async hotels(): Promise<Hotel[]> {
+    return Hotel.find({});
+  }
 
-    const replacements: any[] = [realLimitPlusOne];
-
-    if (cursor) {
-      replacements.push(new Date(parseInt(cursor)));
-    }
-
-    const hotels = await dataSource.query(
-      `
-        select p.*, 
-        json_build_object(
-          'id', u.id,
-          'username', u.username,
-          'email', u.email,
-          'createdAt', u."createdAt",
-          'updatedAt', u."updatedAt"
-          ) author
-        from hotel p
-        inner join public.user u on u.id = p."authorId"
-        ${cursor ? `where p."createdAt" < $2` : ""}
-        order by p."createdAt" DESC
-        limit $1    
-    `,
-      replacements
-    );
-
-    return {
-      hotels: hotels.slice(0, realLimit),
-      hasMore: hotels.length === realLimitPlusOne,
-    };
+  @Query(() => [Hotel])
+  async filterHotels(
+    @Arg("brandId", () => Int, { nullable: true }) brandId: number
+  ): Promise<Hotel[]> {
+    return Hotel.find({ where: { brandId } });
   }
 
   //Get single hotel by id
@@ -113,6 +76,10 @@ export class HotelResolver {
     @Ctx() { req }: MyContext
   ): Promise<Hotel> {
     let authorUserId = req.session.userId;
+
+    if (!authorUserId) {
+      throw new Error("you must be logged in");
+    }
     const brandHotel = await HotelBrand.findOne({
       where: { name: input.brandName },
     });
@@ -128,7 +95,7 @@ export class HotelResolver {
   //Update Hotel
   @Mutation(() => Hotel, { nullable: true })
   async updateHotel(
-    @Arg("id") id: number,
+    @Arg("id", () => Int) id: number,
     @Arg("name", () => String, { nullable: true }) name: string,
     @Arg("image", () => String, { nullable: true }) image: string,
     @Arg("city", () => String, { nullable: true }) city: string,
@@ -178,7 +145,7 @@ export class HotelResolver {
 
   //Delete Hotel
   @Mutation(() => Boolean)
-  async deleteHotel(@Arg("id") id: number): Promise<boolean> {
+  async deleteHotel(@Arg("id", () => Int) id: number): Promise<boolean> {
     await Hotel.delete(id);
     return true;
   }

@@ -28,7 +28,7 @@ __decorate([
 ], HotelBrand.prototype, "id", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ unique: true }),
     __metadata("design:type", String)
 ], HotelBrand.prototype, "name", void 0);
 __decorate([
@@ -37,7 +37,9 @@ __decorate([
     __metadata("design:type", Number)
 ], HotelBrand.prototype, "authorId", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => Hotel_1.Hotel, (item) => item.brand),
+    (0, typeorm_1.OneToMany)(() => Hotel_1.Hotel, (item) => item.brand, {
+        onUpdate: "CASCADE",
+    }),
     __metadata("design:type", Array)
 ], HotelBrand.prototype, "brands", void 0);
 __decorate([

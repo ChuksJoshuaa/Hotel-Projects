@@ -34,9 +34,17 @@ const main = async () => {
 
   app.use(cookieParser());
 
-  const redis = new Redis();
+  const redis = new Redis(process.env.REDIS_URL as any);
 
-  app.use(cors({ origin: process.env.CORS_ORIGIN, credentials: true }));
+  // const redis = new Redis();
+  app.set("trust proxy", 1);
+  app.use(
+    cors({
+      origin: process.env.CORS_ORIGIN,
+      // origin: process.env.CORS_ORIGIN1,
+      credentials: true,
+    })
+  );
 
   app.use(
     session({
@@ -48,9 +56,10 @@ const main = async () => {
       }),
       cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
-        httpOnly: false,
+        httpOnly: false, //set it to false for development
         sameSite: "lax",
-        secure: __prod__,
+        secure: __prod__, //must be false for development and true for production
+        // domain: !__prod__ ? ".netlify.app" : undefined,
       },
       saveUninitialized: false,
       resave: false,
