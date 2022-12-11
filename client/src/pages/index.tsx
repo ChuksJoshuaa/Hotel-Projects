@@ -6,6 +6,7 @@ import SingleHotel from "./SingleHotel";
 import AddHotel from "./AddHotel";
 import AddBrand from "./AddBrand";
 import FilteredHotels from "./FilteredHotels";
+import ErrorPage from "./ErrorPage";
 
 export {
   Home,
@@ -16,4 +17,5 @@ export {
   AddHotel,
   AddBrand,
   FilteredHotels,
+  ErrorPage,
 };
