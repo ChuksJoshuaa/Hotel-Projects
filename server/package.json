@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "watch": "tsc -w",
-    "build":"tsc",
+    "build":"tsc -p .",
     "dev": "nodemon dist/index.js",
     "start": "node dist/index.js",
+    "start2": "vercel dev",
     "start1": "ts-node src/index.ts",
     "dev2": "nodemon --exec ts-node src/index.ts",
     "deploy" : "vercel deploy --prod"

@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import { __prod__, COOKIE_NAME } from "./constant";
-import "dotenv-safe/config";
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
@@ -9,7 +10,6 @@ import Redis from "ioredis";
 import connectRedis from "connect-redis";
 import session from "express-session";
 const RedisStore = connectRedis(session);
-import "dotenv-safe/config";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
@@ -40,8 +40,8 @@ const main = async () => {
   app.set("trust proxy", 1);
   app.use(
     cors({
-      origin: process.env.CORS_ORIGIN,
-      // origin: process.env.CORS_ORIGIN1,
+      // origin: process.env.CORS_ORIGIN,
+      origin: process.env.CORS_ORIGIN1,
       credentials: true,
     })
   );
@@ -56,10 +56,10 @@ const main = async () => {
       }),
       cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
-        httpOnly: false, //set it to false for development
+        httpOnly: __prod__, //set it to false for development
         sameSite: "lax",
         secure: __prod__, //must be false for development and true for production
-        // domain: !__prod__ ? ".netlify.app" : undefined,
+        // domain: !__prod__ ? ".netlify.app" : undefined
       },
       saveUninitialized: false,
       resave: false,
@@ -83,6 +83,7 @@ const main = async () => {
         },
       }),
     ],
+    introspection: __prod__,
     context: ({ req, res }) => ({ req, res, redis }),
   });
 

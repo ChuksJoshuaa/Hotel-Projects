@@ -22,10 +22,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HotelResolver = void 0;
-const Authenticated_1 = require("../middleware/Authenticated");
 const type_graphql_1 = require("type-graphql");
-const Hotel_1 = require("../entities/Hotel");
-const HotelBrand_1 = require("../entities/HotelBrand");
+const Hotel_1 = require("../entity/Hotel");
+const HotelBrand_1 = require("../entity/HotelBrand");
 let HotelInput = class HotelInput {
 };
 __decorate([
@@ -40,6 +39,10 @@ __decorate([
     (0, type_graphql_1.Field)(),
     __metadata("design:type", Number)
 ], HotelInput.prototype, "price", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", Number)
+], HotelInput.prototype, "authorId", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),
     __metadata("design:type", String)
@@ -65,7 +68,7 @@ HotelInput = __decorate([
 ], HotelInput);
 let HotelResolver = class HotelResolver {
     descriptionSnippet(root) {
-        return root.description.slice(0, 100);
+        return root.description.slice(0, 70);
     }
     hotels() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -83,8 +86,8 @@ let HotelResolver = class HotelResolver {
     createHotel(input, { req }) {
         return __awaiter(this, void 0, void 0, function* () {
             let authorUserId = req.session.userId;
-            if (!authorUserId) {
-                throw new Error("you must be logged in");
+            if (!authorUserId || authorUserId === undefined || authorUserId === null) {
+                authorUserId = input.authorId;
             }
             const brandHotel = yield HotelBrand_1.HotelBrand.findOne({
                 where: { name: input.brandName },
@@ -162,7 +165,6 @@ __decorate([
 ], HotelResolver.prototype, "hotel", null);
 __decorate([
     (0, type_graphql_1.Mutation)(() => Hotel_1.Hotel),
-    (0, type_graphql_1.UseMiddleware)(Authenticated_1.Authenticated),
     __param(0, (0, type_graphql_1.Arg)("input")),
     __param(1, (0, type_graphql_1.Ctx)()),
     __metadata("design:type", Function),

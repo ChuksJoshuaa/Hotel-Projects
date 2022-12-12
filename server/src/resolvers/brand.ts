@@ -1,4 +1,4 @@
-import { Authenticated } from "../middleware/Authenticated";
+// import { Authenticated } from "../middleware/Authenticated";
 import { MyContext } from "src/types";
 import {
   Resolver,
@@ -8,16 +8,19 @@ import {
   InputType,
   Field,
   Ctx,
-  UseMiddleware,
+  // UseMiddleware,
   Int,
 } from "type-graphql";
-import { HotelBrand } from "../entities/HotelBrand";
+import { HotelBrand } from "../entity/HotelBrand";
 // import { Hotel } from "../entities/Hotel";
 
 @InputType()
 class BrandInput {
   @Field()
   name: string;
+
+  @Field()
+  authorId: number;
 }
 
 @Resolver(HotelBrand)
@@ -35,12 +38,14 @@ export class HotelBrandResolver {
 
   //Create HotelBrand
   @Mutation(() => HotelBrand)
-  @UseMiddleware(Authenticated)
   async createBrand(
     @Arg("input") input: BrandInput,
     @Ctx() { req }: MyContext
   ): Promise<HotelBrand> {
     let authorUserId = req.session.userId;
+    if (!authorUserId || authorUserId === undefined || authorUserId === null) {
+      authorUserId = input.authorId;
+    }
     return HotelBrand.create({
       ...input,
       authorId: authorUserId,
@@ -49,7 +54,7 @@ export class HotelBrandResolver {
 
   //Update Brand
   @Mutation(() => HotelBrand, { nullable: true })
-  @UseMiddleware(Authenticated)
+  // @UseMiddleware(Authenticated)
   async updateBrand(
     @Arg("id", () => Int) id: number,
     @Arg("name", () => String, { nullable: true }) name: string
@@ -60,7 +65,6 @@ export class HotelBrandResolver {
     }
     if (typeof name !== "undefined") {
       await HotelBrand.update({ id }, { name });
-      // await Hotel.find({ where: { name } });
     }
 
     return brand;
@@ -68,7 +72,7 @@ export class HotelBrandResolver {
 
   //Delete Brand
   @Mutation(() => Boolean)
-  @UseMiddleware(Authenticated)
+  // @UseMiddleware(Authenticated)
   async deleteBrand(@Arg("id", () => Int) id: number): Promise<boolean> {
     await HotelBrand.delete(id);
     return true;
