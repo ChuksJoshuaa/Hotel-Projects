@@ -14,7 +14,7 @@ import { Hotel } from "./Hotel";
 import { User } from "./User";
 
 @ObjectType()
-@Entity()
+@Entity("hotel_brand")
 export class HotelBrand extends BaseEntity {
   @Field(() => String)
   @PrimaryGeneratedColumn()

@@ -102,7 +102,7 @@ __decorate([
 ], Hotel.prototype, "updatedAt", void 0);
 Hotel = __decorate([
     (0, type_graphql_1.ObjectType)(),
-    (0, typeorm_1.Entity)()
+    (0, typeorm_1.Entity)("hotel")
 ], Hotel);
 exports.Hotel = Hotel;
 //# sourceMappingURL=Hotel.js.map
