@@ -26,7 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserResolver = void 0;
 const type_graphql_1 = require("type-graphql");
-const User_entity_1 = require("../entity/User.entity");
+const User_entity_1 = require("../entities/User.entity");
 const argon2_1 = __importDefault(require("argon2"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();

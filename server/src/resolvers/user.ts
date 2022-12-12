@@ -10,7 +10,7 @@ import {
   Root,
 } from "type-graphql";
 import { MyContext } from "../types";
-import { User } from "../entity/User.entity";
+import { User } from "../entities/User.entity";
 import argon2 from "argon2";
 import dotenv from "dotenv";
 dotenv.config();
