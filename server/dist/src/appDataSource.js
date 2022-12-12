@@ -20,6 +20,6 @@ exports.dataSource = new typeorm_1.DataSource({
     synchronize: !constant_1.__prod__,
     logging: !constant_1.__prod__,
     migrations: [path_1.default.join(__dirname, "./migrations/*")],
-    entities: ["dist/src/**/**.entity{.js}"],
+    entities: ["dist/**/**.entity{.js}"],
 });
 //# sourceMappingURL=appDataSource.js.map
