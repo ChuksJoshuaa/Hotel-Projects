@@ -11,7 +11,7 @@ import {
   // UseMiddleware,
   Int,
 } from "type-graphql";
-import { HotelBrand } from "../entities/HotelBrand";
+import { HotelBrand } from "../entity/HotelBrand";
 // import { Hotel } from "../entities/Hotel";
 
 @InputType()

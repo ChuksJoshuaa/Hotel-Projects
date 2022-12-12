@@ -23,8 +23,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HotelResolver = void 0;
 const type_graphql_1 = require("type-graphql");
-const Hotel_1 = require("../entities/Hotel");
-const HotelBrand_1 = require("../entities/HotelBrand");
+const Hotel_1 = require("../entity/Hotel");
+const HotelBrand_1 = require("../entity/HotelBrand");
 let HotelInput = class HotelInput {
 };
 __decorate([
