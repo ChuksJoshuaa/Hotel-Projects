@@ -13,12 +13,28 @@ const RedisStore = connectRedis(session);
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
-import { dataSource } from "./appDataSource";
 import { HotelBrandResolver } from "./resolvers/brand";
 import { HotelResolver } from "./resolvers/hotel";
+import path from "path";
+import { DataSource } from "typeorm";
 
 const main = async () => {
-  await dataSource
+  const portNumber = Number(process.env.DATABASE_PORT);
+
+  const dataSource = new DataSource({
+    type: "postgres",
+    url: process.env.DATABASE_URL,
+    port: portNumber,
+    username: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASSWORD,
+    database: process.env.DATABASE_NAME,
+    synchronize: !__prod__,
+    logging: !__prod__,
+    migrations: [path.join(__dirname, "./migrations/*")],
+    entities: [__dirname + "/entity/*.{js,ts}"],
+  });
+
+  dataSource
     .initialize()
     .then((response) => {
       console.log(typeof response);

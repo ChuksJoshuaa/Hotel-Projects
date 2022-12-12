@@ -27,11 +27,25 @@ const RedisStore = (0, connect_redis_1.default)(express_session_1.default);
 const cors_1 = __importDefault(require("cors"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const apollo_server_core_1 = require("apollo-server-core");
-const appDataSource_1 = require("./appDataSource");
 const brand_1 = require("./resolvers/brand");
 const hotel_1 = require("./resolvers/hotel");
+const path_1 = __importDefault(require("path"));
+const typeorm_1 = require("typeorm");
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
-    yield appDataSource_1.dataSource
+    const portNumber = Number(process.env.DATABASE_PORT);
+    const dataSource = new typeorm_1.DataSource({
+        type: "postgres",
+        url: process.env.DATABASE_URL,
+        port: portNumber,
+        username: process.env.DATABASE_USER,
+        password: process.env.DATABASE_PASSWORD,
+        database: process.env.DATABASE_NAME,
+        synchronize: !constant_1.__prod__,
+        logging: !constant_1.__prod__,
+        migrations: [path_1.default.join(__dirname, "./migrations/*")],
+        entities: [__dirname + "/entity/*.{js,ts}"],
+    });
+    dataSource
         .initialize()
         .then((response) => {
         console.log(typeof response);
