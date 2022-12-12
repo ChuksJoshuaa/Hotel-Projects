@@ -3,15 +3,14 @@ import dotenv from "dotenv";
 dotenv.config();
 import path from "path";
 import { __prod__ } from "./constant";
-// import { Hotel } from "./entities/Hotel";
-// import { HotelBrand } from "./entities/HotelBrand";
-// import { User } from "./entities/User";
+import { Hotel } from "./entities/Hotel";
+import { HotelBrand } from "./entities/HotelBrand";
+import { User } from "./entities/User";
 
 const portNumber = Number(process.env.DATABASE_PORT);
 
 export const dataSource = new DataSource({
   type: "postgres",
-  host: "localhost",
   url: process.env.DATABASE_URL,
   port: portNumber,
   username: process.env.DATABASE_USER,
@@ -20,5 +19,5 @@ export const dataSource = new DataSource({
   synchronize: !__prod__,
   logging: !__prod__,
   migrations: [path.join(__dirname, "./migrations/*")],
-  entities: [path.join(__dirname, "/entities/*.{js,ts}")],
+  entities: [Hotel, User, HotelBrand],
 });
