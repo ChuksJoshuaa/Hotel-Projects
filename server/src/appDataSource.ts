@@ -3,9 +3,9 @@ import dotenv from "dotenv";
 dotenv.config();
 import path from "path";
 import { __prod__ } from "./constant";
-import { Hotel } from "./entities/Hotel.entity";
-import { HotelBrand } from "./entities/HotelBrand.entity";
-import { User } from "./entities/User.entity";
+// import { Hotel } from "./entities/Hotel.entity";
+// import { HotelBrand } from "./entities/HotelBrand.entity";
+// import { User } from "./entities/User.entity";
 
 const portNumber = Number(process.env.DATABASE_PORT);
 
@@ -19,5 +19,5 @@ export const dataSource = new DataSource({
   synchronize: !__prod__,
   logging: !__prod__,
   migrations: [path.join(__dirname, "./migrations/*")],
-  entities: [Hotel, HotelBrand, User],
+  entities: ["dist/**/**.entity{.ts,.js}"],
 });
