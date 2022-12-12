@@ -48,7 +48,7 @@ class HotelInput {
 export class HotelResolver {
   @FieldResolver(() => String)
   descriptionSnippet(@Root() root: Hotel) {
-    return root.description.slice(0, 100);
+    return root.description.slice(0, 70);
   }
 
   @Query(() => [Hotel])

@@ -68,7 +68,7 @@ HotelInput = __decorate([
 ], HotelInput);
 let HotelResolver = class HotelResolver {
     descriptionSnippet(root) {
-        return root.description.slice(0, 100);
+        return root.description.slice(0, 70);
     }
     hotels() {
         return __awaiter(this, void 0, void 0, function* () {

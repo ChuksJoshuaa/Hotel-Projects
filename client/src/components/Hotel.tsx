@@ -38,7 +38,7 @@ const Hotel = () => {
                       alt={item.name}
                     />
                     <h5 className="card-title mt-2 text-danger">{item.name}</h5>
-                    <p className="card-text">{item.description}</p>
+                    <p className="card-text">{item.descriptionSnippet}...</p>
                     <div className="d-flex justify-content-between">
                       <h5>${item.price}</h5>
                       <Link to={`hotels/${item.id}`}>
