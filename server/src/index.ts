@@ -83,6 +83,7 @@ const main = async () => {
         },
       }),
     ],
+    introspection: process.env.NODE_ENV === "production",
     context: ({ req, res }) => ({ req, res, redis }),
   });
 
