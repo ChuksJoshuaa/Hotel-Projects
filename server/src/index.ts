@@ -59,7 +59,7 @@ const main = async () => {
         httpOnly: __prod__, //set it to false for development
         sameSite: "lax",
         secure: __prod__, //must be false for development and true for production
-        // domain: !__prod__ ? ".netlify.app" : undefined,
+        // domain: !__prod__ ? ".netlify.app" : undefined
       },
       saveUninitialized: false,
       resave: false,
