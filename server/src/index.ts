@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import { __prod__, COOKIE_NAME } from "./constant";
-import "dotenv-safe/config";
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
@@ -9,7 +10,6 @@ import Redis from "ioredis";
 import connectRedis from "connect-redis";
 import session from "express-session";
 const RedisStore = connectRedis(session);
-import "dotenv-safe/config";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";

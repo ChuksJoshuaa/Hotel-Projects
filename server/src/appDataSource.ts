@@ -1,5 +1,6 @@
 import { DataSource } from "typeorm";
-import "dotenv-safe/config";
+import dotenv from "dotenv";
+dotenv.config();
 import path from "path";
 import { __prod__ } from "./constant";
 import { Hotel } from "./entities/Hotel";

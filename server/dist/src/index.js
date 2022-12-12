@@ -14,7 +14,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 require("reflect-metadata");
 const constant_1 = require("./constant");
-require("dotenv-safe/config");
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 const express_1 = __importDefault(require("express"));
 const apollo_server_express_1 = require("apollo-server-express");
 const type_graphql_1 = require("type-graphql");
@@ -23,7 +24,6 @@ const ioredis_1 = __importDefault(require("ioredis"));
 const connect_redis_1 = __importDefault(require("connect-redis"));
 const express_session_1 = __importDefault(require("express-session"));
 const RedisStore = (0, connect_redis_1.default)(express_session_1.default);
-require("dotenv-safe/config");
 const cors_1 = __importDefault(require("cors"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const apollo_server_core_1 = require("apollo-server-core");
