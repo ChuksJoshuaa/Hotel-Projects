@@ -10,8 +10,8 @@ import {
   ManyToOne,
   // Any,
 } from "typeorm";
-import { Hotel } from "./Hotel";
-import { User } from "./User";
+import { Hotel } from "./Hotel.entity";
+import { User } from "./User.entity";
 
 @ObjectType()
 @Entity("hotel_brand")

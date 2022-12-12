@@ -11,8 +11,8 @@ import {
   FieldResolver,
   Root,
 } from "type-graphql";
-import { Hotel } from "../entity/Hotel";
-import { HotelBrand } from "../entity/HotelBrand";
+import { Hotel } from "../entity/Hotel.entity";
+import { HotelBrand } from "../entity/HotelBrand.entity";
 
 @InputType()
 class HotelInput {

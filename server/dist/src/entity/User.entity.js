@@ -9,57 +9,58 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.HotelBrand = void 0;
+exports.User = void 0;
 const type_graphql_1 = require("type-graphql");
 const typeorm_1 = require("typeorm");
-const Hotel_1 = require("./Hotel");
-const User_1 = require("./User");
-let HotelBrand = class HotelBrand extends typeorm_1.BaseEntity {
+const Hotel_entity_1 = require("./Hotel.entity");
+const HotelBrand_entity_1 = require("./HotelBrand.entity");
+let User = class User extends typeorm_1.BaseEntity {
     constructor() {
         super(...arguments);
-        this.createdAt = new Date();
-        this.updatedAt = new Date();
+        this.createdAt = Date;
+        this.updatedAt = Date;
     }
 };
 __decorate([
     (0, type_graphql_1.Field)(() => String),
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], HotelBrand.prototype, "id", void 0);
+], User.prototype, "id", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),
     (0, typeorm_1.Column)({ unique: true }),
     __metadata("design:type", String)
-], HotelBrand.prototype, "name", void 0);
+], User.prototype, "username", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),
+    (0, typeorm_1.Column)({ unique: true }),
+    __metadata("design:type", String)
+], User.prototype, "email", void 0);
+__decorate([
     (0, typeorm_1.Column)(),
-    __metadata("design:type", Number)
-], HotelBrand.prototype, "authorId", void 0);
+    __metadata("design:type", String)
+], User.prototype, "password", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => Hotel_1.Hotel, (item) => item.brand, {
-        onUpdate: "CASCADE",
-    }),
+    (0, typeorm_1.OneToMany)(() => Hotel_entity_1.Hotel, (hotel) => hotel.author),
     __metadata("design:type", Array)
-], HotelBrand.prototype, "brands", void 0);
+], User.prototype, "hotels", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(() => User_1.User),
-    (0, typeorm_1.ManyToOne)(() => User_1.User, (item) => item.hotelbrands),
-    __metadata("design:type", User_1.User)
-], HotelBrand.prototype, "author", void 0);
+    (0, typeorm_1.OneToMany)(() => HotelBrand_entity_1.HotelBrand, (hotel) => hotel.author),
+    __metadata("design:type", Array)
+], User.prototype, "hotelbrands", void 0);
 __decorate([
     (0, type_graphql_1.Field)(() => String),
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Object)
-], HotelBrand.prototype, "createdAt", void 0);
+], User.prototype, "createdAt", void 0);
 __decorate([
     (0, type_graphql_1.Field)(() => String),
     (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Object)
-], HotelBrand.prototype, "updatedAt", void 0);
-HotelBrand = __decorate([
+], User.prototype, "updatedAt", void 0);
+User = __decorate([
     (0, type_graphql_1.ObjectType)(),
-    (0, typeorm_1.Entity)("hotel_brand")
-], HotelBrand);
-exports.HotelBrand = HotelBrand;
-//# sourceMappingURL=HotelBrand.js.map
+    (0, typeorm_1.Entity)("user")
+], User);
+exports.User = User;
+//# sourceMappingURL=User.entity.js.map
