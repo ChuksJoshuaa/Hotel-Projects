@@ -17,7 +17,7 @@ export const dataSource = new DataSource({
   // username: process.env.DATABASE_USER,
   // password: process.env.DATABASE_PASSWORD,
   // database: process.env.DATABASE_NAME,
-  // synchronize: true,
+  synchronize: true,
   logging: true,
   migrations: [path.join(__dirname, "./migrations/*")],
   entities: [Hotel, User, HotelBrand],
