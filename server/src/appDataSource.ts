@@ -11,7 +11,7 @@ const portNumber = Number(process.env.DATABASE_PORT);
 
 export const dataSource = new DataSource({
   type: "postgres",
-  url: process.env.DATABASE_URL,
+  // url: process.env.DATABASE_URL,
   port: portNumber,
   username: process.env.DATABASE_USER,
   password: process.env.DATABASE_PASSWORD,
