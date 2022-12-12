@@ -78,7 +78,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
                 },
             }),
         ],
-        introspection: process.env.NODE_ENV === "production",
+        introspection: constant_1.__prod__,
         context: ({ req, res }) => ({ req, res, redis }),
     });
     yield apolloServer.start();
