@@ -15,7 +15,6 @@ const User_1 = require("./entities/User");
 const portNumber = Number(process.env.DATABASE_PORT);
 exports.dataSource = new typeorm_1.DataSource({
     type: "postgres",
-    url: process.env.DATABASE_URL,
     port: portNumber,
     username: process.env.DATABASE_USER,
     password: process.env.DATABASE_PASSWORD,
