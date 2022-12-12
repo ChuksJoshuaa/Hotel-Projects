@@ -12,6 +12,7 @@ const constant_1 = require("./constant");
 const portNumber = Number(process.env.DATABASE_PORT);
 exports.dataSource = new typeorm_1.DataSource({
     type: "postgres",
+    host: "localhost",
     url: process.env.DATABASE_URL,
     port: portNumber,
     username: process.env.DATABASE_USER,
@@ -20,6 +21,6 @@ exports.dataSource = new typeorm_1.DataSource({
     synchronize: !constant_1.__prod__,
     logging: !constant_1.__prod__,
     migrations: [path_1.default.join(__dirname, "./migrations/*")],
-    entities: [__dirname + "/entities/*.{js,ts}"],
+    entities: [path_1.default.join(__dirname, "/entities/*.{js,ts}")],
 });
 //# sourceMappingURL=appDataSource.js.map
