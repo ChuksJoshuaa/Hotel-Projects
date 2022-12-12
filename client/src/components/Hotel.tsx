@@ -11,7 +11,7 @@ const Hotel = () => {
   const checkUser = Object.keys(user).length;
 
   return (
-    <div>
+    <div className="mb-6">
       <hr />
       <div className="d-flex justify-content-between align-items-center">
         <h1 className="text-capitalize font-weight-bold fs-3 mt-3">Hotels</h1>

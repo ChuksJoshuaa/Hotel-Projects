@@ -22,7 +22,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HotelBrandResolver = void 0;
-const Authenticated_1 = require("../middleware/Authenticated");
 const type_graphql_1 = require("type-graphql");
 const HotelBrand_1 = require("../entities/HotelBrand");
 let BrandInput = class BrandInput {
@@ -31,6 +30,10 @@ __decorate([
     (0, type_graphql_1.Field)(),
     __metadata("design:type", String)
 ], BrandInput.prototype, "name", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(),
+    __metadata("design:type", Number)
+], BrandInput.prototype, "authorId", void 0);
 BrandInput = __decorate([
     (0, type_graphql_1.InputType)()
 ], BrandInput);
@@ -46,6 +49,9 @@ let HotelBrandResolver = class HotelBrandResolver {
     createBrand(input, { req }) {
         return __awaiter(this, void 0, void 0, function* () {
             let authorUserId = req.session.userId;
+            if (!authorUserId || authorUserId === undefined || authorUserId === null) {
+                authorUserId = input.authorId;
+            }
             return HotelBrand_1.HotelBrand.create(Object.assign(Object.assign({}, input), { authorId: authorUserId })).save();
         });
     }
@@ -83,7 +89,6 @@ __decorate([
 ], HotelBrandResolver.prototype, "brand", null);
 __decorate([
     (0, type_graphql_1.Mutation)(() => HotelBrand_1.HotelBrand),
-    (0, type_graphql_1.UseMiddleware)(Authenticated_1.Authenticated),
     __param(0, (0, type_graphql_1.Arg)("input")),
     __param(1, (0, type_graphql_1.Ctx)()),
     __metadata("design:type", Function),
@@ -92,7 +97,6 @@ __decorate([
 ], HotelBrandResolver.prototype, "createBrand", null);
 __decorate([
     (0, type_graphql_1.Mutation)(() => HotelBrand_1.HotelBrand, { nullable: true }),
-    (0, type_graphql_1.UseMiddleware)(Authenticated_1.Authenticated),
     __param(0, (0, type_graphql_1.Arg)("id", () => type_graphql_1.Int)),
     __param(1, (0, type_graphql_1.Arg)("name", () => String, { nullable: true })),
     __metadata("design:type", Function),
@@ -101,7 +105,6 @@ __decorate([
 ], HotelBrandResolver.prototype, "updateBrand", null);
 __decorate([
     (0, type_graphql_1.Mutation)(() => Boolean),
-    (0, type_graphql_1.UseMiddleware)(Authenticated_1.Authenticated),
     __param(0, (0, type_graphql_1.Arg)("id", () => type_graphql_1.Int)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),

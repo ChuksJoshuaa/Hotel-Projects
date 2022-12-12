@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className="footer mt-5 bg-light">
+    <div className="footer mt-5 bg-light fixed-bottom">
       <h5>
         &copy; {new Date().getFullYear()}
         <span> Hotel Suite. </span>

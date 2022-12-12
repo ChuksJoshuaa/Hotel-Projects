@@ -2,13 +2,17 @@ import { useMutation } from "@apollo/client";
 import React, { useState } from "react";
 import { CREATE_HOTEL_BRAND } from "../mutations/createBrand";
 import { GET_HOTEL_BRANDS } from "../queries/brands";
+import { useNavigate } from "react-router-dom";
 
 const AddBrand = () => {
   const [name, setName] = useState("");
   const user = JSON.parse(localStorage.getItem("profile") || "{}");
   const checkUser = Object.keys(user).length;
+  let userId = user?.userId;
+  userId = parseInt(userId);
   const [createBrand] = useMutation(CREATE_HOTEL_BRAND);
   const [errors, setErrors] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,8 +29,10 @@ const AddBrand = () => {
       variables: {
         input: {
           name: name,
+          authorId: userId,
         },
       },
+      onCompleted: () => navigate("/"),
       refetchQueries: [{ query: GET_HOTEL_BRANDS }],
     });
 

@@ -82,7 +82,8 @@ const Login = () => {
       if (response?.data?.login?.errors === null) {
         setSuccess("login was successful");
         let userName = response?.data?.login?.user?.username;
-        localStorage.setItem("profile", JSON.stringify({ userName }));
+        let userId = response?.data?.login?.user?.id;
+        localStorage.setItem("profile", JSON.stringify({ userName, userId }));
         navigate("/");
       } else {
         console.log(response?.data?.login?.errors);
