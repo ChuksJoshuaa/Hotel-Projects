@@ -40,8 +40,8 @@ const main = async () => {
   app.set("trust proxy", 1);
   app.use(
     cors({
-      origin: process.env.CORS_ORIGIN,
-      // origin: process.env.CORS_ORIGIN1,
+      // origin: process.env.CORS_ORIGIN,
+      origin: process.env.CORS_ORIGIN1,
       credentials: true,
     })
   );
@@ -56,7 +56,7 @@ const main = async () => {
       }),
       cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
-        httpOnly: false, //set it to false for development
+        httpOnly: __prod__, //set it to false for development
         sameSite: "lax",
         secure: __prod__, //must be false for development and true for production
         // domain: !__prod__ ? ".netlify.app" : undefined,
