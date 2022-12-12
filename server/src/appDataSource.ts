@@ -11,14 +11,14 @@ const portNumber = Number(process.env.DATABASE_PORT);
 
 export const dataSource = new DataSource({
   type: "postgres",
-  // host: "localhost",
+  host: "localhost",
   url: process.env.DATABASE_URL,
   port: portNumber,
-  // username: process.env.DATABASE_USER,
-  // password: process.env.DATABASE_PASSWORD,
-  // database: process.env.DATABASE_NAME,
+  username: process.env.DATABASE_USER,
+  password: process.env.DATABASE_PASSWORD,
+  database: process.env.DATABASE_NAME,
   synchronize: true,
-  logging: true,
+  logging: false,
   migrations: [path.join(__dirname, "./migrations/*")],
   entities: [Hotel, User, HotelBrand],
 });
