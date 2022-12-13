@@ -10,12 +10,13 @@ dotenv_1.default.config();
 const path_1 = __importDefault(require("path"));
 const constant_1 = require("./constant");
 const portNumber = Number(process.env.DATABASE_PORT);
+const isCompiled = path_1.default.extname(__filename).includes("js");
 exports.dataSource = new typeorm_1.DataSource({
     type: "postgres",
     url: process.env.DATABASE_URL,
     port: portNumber,
     synchronize: !constant_1.__prod__,
-    entities: [path_1.default.join(__dirname, "./entities/*")],
+    entities: [`src/entities/**/*.${isCompiled ? "js" : "ts"}`],
     logging: !constant_1.__prod__,
     migrations: [path_1.default.join(__dirname, "./migrations/*")],
 });
