@@ -14,7 +14,9 @@ export const dataSource = new DataSource({
   password: process.env.DATABASE_PASSWORD,
   database: process.env.DATABASE_NAME,
   synchronize: !__prod__,
+  entities: ["dist/src/entities/**/**.entity{.ts,.js}"],
   logging: !__prod__,
   migrations: [path.join(__dirname, "./migrations/*")],
-  entities: ["dist/src/**/**.entity{.ts,.js}", "src/**/**.entity{.ts,.js}"],
 });
+
+// "dist/src/**/**.entity{.ts,.js}",

@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  
   "scripts": {
     "watch": "tsc -w",
     "build":"tsc -p .",
-    "dev": "nodemon dist/index.js",
-    "start": "node dist/index.js",
+    "dev": "node dist/src/index.js",
+    "start": "node dist/src/index.js",
     "start2": "vercel dev",
     "start1": "ts-node src/index.ts",
     "dev2": "nodemon --exec ts-node src/index.ts",
