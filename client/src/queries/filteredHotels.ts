@@ -5,7 +5,7 @@ export const FILTERED_HOTELS = gql`
     filterHotels(brandId: $brandId) {
       id
       name
-      description
+      descriptionSnippet
       image
       price
       city

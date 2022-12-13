@@ -5,7 +5,7 @@ export const GET_HOTELS = gql`
     hotels {
       id
       name
-      description
+      descriptionSnippet
       image
       price
       city

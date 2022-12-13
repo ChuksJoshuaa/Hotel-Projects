@@ -37,11 +37,6 @@ const client = new ApolloClient({
   uri: "http://localhost:5000/graphql",
   cache,
   credentials: "include",
-  // headers: {
-  //   cookie:
-  //     (typeof window === "undefined" ? ctx?.req?.headers.cookie : undefined) ||
-  //     "",
-  // },
 });
 
 function App() {

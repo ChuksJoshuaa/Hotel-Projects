@@ -12,8 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const type_graphql_1 = require("type-graphql");
 const typeorm_1 = require("typeorm");
-const Hotel_1 = require("./Hotel");
-const HotelBrand_1 = require("./HotelBrand");
+const Hotel_entity_1 = require("./Hotel.entity");
+const HotelBrand_entity_1 = require("./HotelBrand.entity");
 let User = class User extends typeorm_1.BaseEntity {
     constructor() {
         super(...arguments);
@@ -41,11 +41,11 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => Hotel_1.Hotel, (hotel) => hotel.author),
+    (0, typeorm_1.OneToMany)(() => Hotel_entity_1.Hotel, (hotel) => hotel.author),
     __metadata("design:type", Array)
 ], User.prototype, "hotels", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => HotelBrand_1.HotelBrand, (hotel) => hotel.author),
+    (0, typeorm_1.OneToMany)(() => HotelBrand_entity_1.HotelBrand, (hotel) => hotel.author),
     __metadata("design:type", Array)
 ], User.prototype, "hotelbrands", void 0);
 __decorate([
@@ -60,7 +60,7 @@ __decorate([
 ], User.prototype, "updatedAt", void 0);
 User = __decorate([
     (0, type_graphql_1.ObjectType)(),
-    (0, typeorm_1.Entity)()
+    (0, typeorm_1.Entity)("user")
 ], User);
 exports.User = User;
-//# sourceMappingURL=User.js.map
+//# sourceMappingURL=User.entity.js.map

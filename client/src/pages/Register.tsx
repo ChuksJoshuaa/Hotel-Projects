@@ -100,7 +100,8 @@ const Register = () => {
       if (response?.data?.register?.errors === null) {
         setSuccess("user has been registered successfully");
         let userName = response?.data?.register?.user?.username;
-        localStorage.setItem("profile", JSON.stringify({ userName }));
+        let userId = response?.data?.register?.user?.id;
+        localStorage.setItem("profile", JSON.stringify({ userName, userId }));
         navigate("/");
       } else {
         console.log(response?.data?.register?.errors);

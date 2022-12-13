@@ -1,4 +1,3 @@
-import { Authenticated } from "../middleware/Authenticated";
 import { MyContext } from "src/types";
 import {
   Resolver,
@@ -8,13 +7,12 @@ import {
   InputType,
   Field,
   Ctx,
-  UseMiddleware,
   Int,
   FieldResolver,
   Root,
 } from "type-graphql";
-import { Hotel } from "../entities/Hotel";
-import { HotelBrand } from "../entities/HotelBrand";
+import { Hotel } from "../entities/Hotel.entity";
+import { HotelBrand } from "../entities/HotelBrand.entity";
 
 @InputType()
 class HotelInput {
@@ -26,6 +24,9 @@ class HotelInput {
 
   @Field()
   price: number;
+
+  @Field()
+  authorId: number;
 
   @Field()
   address: string;
@@ -47,7 +48,7 @@ class HotelInput {
 export class HotelResolver {
   @FieldResolver(() => String)
   descriptionSnippet(@Root() root: Hotel) {
-    return root.description.slice(0, 100);
+    return root.description.slice(0, 70);
   }
 
   @Query(() => [Hotel])
@@ -70,15 +71,13 @@ export class HotelResolver {
 
   //Create Hotel
   @Mutation(() => Hotel)
-  @UseMiddleware(Authenticated)
   async createHotel(
     @Arg("input") input: HotelInput,
     @Ctx() { req }: MyContext
   ): Promise<Hotel> {
     let authorUserId = req.session.userId;
-
-    if (!authorUserId) {
-      throw new Error("you must be logged in");
+    if (!authorUserId || authorUserId === undefined || authorUserId === null) {
+      authorUserId = input.authorId;
     }
     const brandHotel = await HotelBrand.findOne({
       where: { name: input.brandName },

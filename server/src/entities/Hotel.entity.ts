@@ -9,12 +9,12 @@ import {
   ManyToOne,
   JoinColumn,
 } from "typeorm";
-import { HotelBrand } from "./HotelBrand";
+import { HotelBrand } from "./HotelBrand.entity";
 
-import { User } from "./User";
+import { User } from "./User.entity";
 
 @ObjectType()
-@Entity()
+@Entity("hotel")
 export class Hotel extends BaseEntity {
   @Field()
   @PrimaryGeneratedColumn()

@@ -19,6 +19,8 @@ const AddHotel = () => {
   const { data } = useQuery(GET_HOTEL_BRANDS);
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("profile") || "{}");
+  let userId = user?.userId;
+  userId = parseInt(userId);
 
   const checkUser = Object.keys(user).length;
 
@@ -50,6 +52,7 @@ const AddHotel = () => {
           name: name,
           description: description,
           image: image,
+          authorId: userId,
           price: myPrice,
           address: address,
           city: city,

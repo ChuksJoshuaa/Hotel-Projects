@@ -8,11 +8,11 @@ import {
   OneToMany,
   UpdateDateColumn,
 } from "typeorm";
-import { Hotel } from "./Hotel";
-import { HotelBrand } from "./HotelBrand";
+import { Hotel } from "./Hotel.entity";
+import { HotelBrand } from "./HotelBrand.entity";
 
 @ObjectType()
-@Entity()
+@Entity("user")
 export class User extends BaseEntity {
   @Field(() => String)
   @PrimaryGeneratedColumn()
