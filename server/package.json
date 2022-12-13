@@ -7,13 +7,13 @@
   "scripts": {
     "watch": "tsc -w",
     "build":"tsc -p .",
-    "dev": "node dist/src/index.js",
-    "start": "node dist/src/index.js",
+    "dev": "node ./dist/src/index.js",
+    "start": "node ./dist/src/index.js",
     "start2": "vercel dev",
     "start1": "ts-node src/index.ts",
     "dev2": "nodemon --exec ts-node src/index.ts",
     "deploy" : "vercel deploy --prod",
-    "prod": "ts-node dist/src/index.js"
+    "prod": "node ./dist/src/index.js"
   },
   "keywords": [],
   "author": "",
