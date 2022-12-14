@@ -44,7 +44,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     const redis = new ioredis_1.default(process.env.REDIS_URL);
     app.set("trust proxy", 1);
     app.use((0, cors_1.default)({
-        origin: process.env.CORS_ORIGIN,
+        origin: process.env.CORS_ORIGIN1,
         credentials: true,
     }));
     app.use((0, express_session_1.default)({
@@ -78,6 +78,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
                 },
             }),
         ],
+        introspection: constant_1.__prod__,
         context: ({ req, res }) => ({ req, res, redis }),
     });
     yield apolloServer.start();
