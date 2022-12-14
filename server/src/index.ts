@@ -40,8 +40,8 @@ const main = async () => {
   app.set("trust proxy", 1);
   app.use(
     cors({
-      // origin: process.env.CORS_ORIGIN,
-      origin: process.env.CORS_ORIGIN1,
+      origin: process.env.CORS_ORIGIN,
+      // origin: process.env.CORS_ORIGIN1,
       credentials: true,
     })
   );
@@ -83,7 +83,7 @@ const main = async () => {
         },
       }),
     ],
-    introspection: __prod__,
+    // introspection: __prod__,
     context: ({ req, res }) => ({ req, res, redis }),
   });
 

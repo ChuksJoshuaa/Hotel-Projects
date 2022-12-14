@@ -33,8 +33,11 @@ const cache = new InMemoryCache({
   },
 });
 
+// const clientUrl = "https://hotel-projects-1t6y-f8yn1d3k4-chuksjoshuaa-gmailcom.vercel.app/graphql"
+const localUrl = "http://localhost:5000/graphql";
+
 const client = new ApolloClient({
-  uri: "https://hotel-projects-1t6y-f8yn1d3k4-chuksjoshuaa-gmailcom.vercel.app/graphql",
+  uri: localUrl,
   cache,
   credentials: "include",
 });
