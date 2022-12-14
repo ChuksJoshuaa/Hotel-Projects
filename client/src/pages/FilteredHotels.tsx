@@ -1,5 +1,4 @@
 import { useQuery } from "@apollo/client";
-import { Link } from "react-router-dom";
 import { FILTERED_HOTELS } from "../queries/filteredHotels";
 import { useParams } from "react-router-dom";
 import { HotelProps } from "../utils/dataTypes";
@@ -7,11 +6,11 @@ import { HotelProps } from "../utils/dataTypes";
 const FilteredHotels = () => {
   const { id } = useParams();
 
-  let chosenId: string | any = id;
-  chosenId = Number(chosenId);
+  const chosenId: string | undefined = id;
+  const newChosenId = Number(chosenId);
 
   const { data, error } = useQuery(FILTERED_HOTELS, {
-    variables: { brandId: chosenId },
+    variables: { brandId: newChosenId },
   });
 
   if (error || data?.filterHotels.length === 0) {

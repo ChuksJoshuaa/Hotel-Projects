@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { FaUser } from "react-icons/fa";
 // import { useLoginMutation } from "../generated/graphql";
 import { LOGIN } from "../mutations/login";
 import { useMutation } from "@apollo/client";
