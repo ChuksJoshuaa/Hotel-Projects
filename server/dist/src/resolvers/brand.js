@@ -23,7 +23,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HotelBrandResolver = void 0;
 const type_graphql_1 = require("type-graphql");
-const HotelBrand_1 = require("../entity/HotelBrand");
+const HotelBrand_entity_1 = require("../entities/HotelBrand.entity");
 let BrandInput = class BrandInput {
 };
 __decorate([
@@ -40,11 +40,11 @@ BrandInput = __decorate([
 let HotelBrandResolver = class HotelBrandResolver {
     brands() {
         return __awaiter(this, void 0, void 0, function* () {
-            return HotelBrand_1.HotelBrand.find({});
+            return HotelBrand_entity_1.HotelBrand.find({});
         });
     }
     brand(id) {
-        return HotelBrand_1.HotelBrand.findOne({ where: { id } });
+        return HotelBrand_entity_1.HotelBrand.findOne({ where: { id } });
     }
     createBrand(input, { req }) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -52,43 +52,43 @@ let HotelBrandResolver = class HotelBrandResolver {
             if (!authorUserId || authorUserId === undefined || authorUserId === null) {
                 authorUserId = input.authorId;
             }
-            return HotelBrand_1.HotelBrand.create(Object.assign(Object.assign({}, input), { authorId: authorUserId })).save();
+            return HotelBrand_entity_1.HotelBrand.create(Object.assign(Object.assign({}, input), { authorId: authorUserId })).save();
         });
     }
     updateBrand(id, name) {
         return __awaiter(this, void 0, void 0, function* () {
-            const brand = yield HotelBrand_1.HotelBrand.findOne({ where: { id } });
+            const brand = yield HotelBrand_entity_1.HotelBrand.findOne({ where: { id } });
             if (!brand) {
                 return null;
             }
             if (typeof name !== "undefined") {
-                yield HotelBrand_1.HotelBrand.update({ id }, { name });
+                yield HotelBrand_entity_1.HotelBrand.update({ id }, { name });
             }
             return brand;
         });
     }
     deleteBrand(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield HotelBrand_1.HotelBrand.delete(id);
+            yield HotelBrand_entity_1.HotelBrand.delete(id);
             return true;
         });
     }
 };
 __decorate([
-    (0, type_graphql_1.Query)(() => [HotelBrand_1.HotelBrand]),
+    (0, type_graphql_1.Query)(() => [HotelBrand_entity_1.HotelBrand]),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], HotelBrandResolver.prototype, "brands", null);
 __decorate([
-    (0, type_graphql_1.Query)(() => HotelBrand_1.HotelBrand, { nullable: true }),
+    (0, type_graphql_1.Query)(() => HotelBrand_entity_1.HotelBrand, { nullable: true }),
     __param(0, (0, type_graphql_1.Arg)("id", () => type_graphql_1.Int)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], HotelBrandResolver.prototype, "brand", null);
 __decorate([
-    (0, type_graphql_1.Mutation)(() => HotelBrand_1.HotelBrand),
+    (0, type_graphql_1.Mutation)(() => HotelBrand_entity_1.HotelBrand),
     __param(0, (0, type_graphql_1.Arg)("input")),
     __param(1, (0, type_graphql_1.Ctx)()),
     __metadata("design:type", Function),
@@ -96,7 +96,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], HotelBrandResolver.prototype, "createBrand", null);
 __decorate([
-    (0, type_graphql_1.Mutation)(() => HotelBrand_1.HotelBrand, { nullable: true }),
+    (0, type_graphql_1.Mutation)(() => HotelBrand_entity_1.HotelBrand, { nullable: true }),
     __param(0, (0, type_graphql_1.Arg)("id", () => type_graphql_1.Int)),
     __param(1, (0, type_graphql_1.Arg)("name", () => String, { nullable: true })),
     __metadata("design:type", Function),
@@ -111,7 +111,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], HotelBrandResolver.prototype, "deleteBrand", null);
 HotelBrandResolver = __decorate([
-    (0, type_graphql_1.Resolver)(HotelBrand_1.HotelBrand)
+    (0, type_graphql_1.Resolver)(HotelBrand_entity_1.HotelBrand)
 ], HotelBrandResolver);
 exports.HotelBrandResolver = HotelBrandResolver;
 //# sourceMappingURL=brand.js.map
