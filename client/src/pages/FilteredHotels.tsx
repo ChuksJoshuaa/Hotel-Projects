@@ -2,6 +2,7 @@ import { useQuery } from "@apollo/client";
 import { Link } from "react-router-dom";
 import { FILTERED_HOTELS } from "../queries/filteredHotels";
 import { useParams } from "react-router-dom";
+import { HotelProps } from "../utils/dataTypes";
 
 const FilteredHotels = () => {
   const { id } = useParams();
@@ -32,7 +33,7 @@ const FilteredHotels = () => {
       {data?.filterHotels.length > 0 ? (
         <div>
           <div className="row">
-            {data?.filterHotels.map((item: any) => (
+            {data?.filterHotels.map((item: HotelProps) => (
               <div className="col-sm-6" key={item.id}>
                 <div className="card mb-3">
                   <div className="card-body">

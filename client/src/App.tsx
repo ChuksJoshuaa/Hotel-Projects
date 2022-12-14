@@ -36,8 +36,6 @@ const cache = new InMemoryCache({
 
 const Url = serverRoute(process.env.REACT_APP_NODE_ENV as string);
 
-console.log(Url);
-
 const client = new ApolloClient({
   uri: Url,
   cache,
