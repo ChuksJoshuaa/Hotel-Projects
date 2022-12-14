@@ -20,7 +20,7 @@ const UpdateHotel = ({ id, item }: IProps) => {
   const [city, setCity] = useState(item.city);
   const [country, setCountry] = useState(item.country);
   const [image, setImage] = useState(item.image);
-  const [price, setPrice] = useState<string | number>(item.price);
+  const [price, setPrice] = useState<any>(item.price);
   const [brandName, setBrandName] = useState(item.brandName);
   const navigate = useNavigate();
   const { data } = useQuery(GET_HOTEL_BRANDS);
@@ -42,7 +42,7 @@ const UpdateHotel = ({ id, item }: IProps) => {
         name: name,
         description: description,
         address: address,
-        price: price,
+        price: parseInt(price),
         city: city,
         country: country,
         brandName: brandName,
@@ -135,9 +135,7 @@ const UpdateHotel = ({ id, item }: IProps) => {
                     id="price"
                     className="form-control"
                     value={price}
-                    onChange={(e) =>
-                      setPrice(e.target.value as string | number)
-                    }
+                    onChange={(e) => setPrice(e.target.value)}
                   />
                 </div>
                 <div className="mb-3">
