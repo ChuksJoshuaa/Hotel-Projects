@@ -6,10 +6,11 @@ import { useMutation, useQuery } from "@apollo/client";
 import { SINGLE_HOTEL } from "../queries/singleHotel";
 import { useNavigate } from "react-router-dom";
 import { GET_HOTEL_BRANDS } from "../queries/brands";
+import { HotelBrand, HotelProps } from "../utils/dataTypes";
 
 interface IProps {
   id: string;
-  item: any;
+  item: HotelProps;
 }
 
 const UpdateHotel = ({ id, item }: IProps) => {
@@ -19,7 +20,7 @@ const UpdateHotel = ({ id, item }: IProps) => {
   const [city, setCity] = useState(item.city);
   const [country, setCountry] = useState(item.country);
   const [image, setImage] = useState(item.image);
-  const [price, setPrice] = useState(item.price);
+  const [price, setPrice] = useState<string | number>(item.price);
   const [brandName, setBrandName] = useState(item.brandName);
   const navigate = useNavigate();
   const { data } = useQuery(GET_HOTEL_BRANDS);
@@ -134,7 +135,9 @@ const UpdateHotel = ({ id, item }: IProps) => {
                     id="price"
                     className="form-control"
                     value={price}
-                    onChange={(e) => setPrice(e.target.value)}
+                    onChange={(e) =>
+                      setPrice(e.target.value as string | number)
+                    }
                   />
                 </div>
                 <div className="mb-3">
@@ -176,7 +179,7 @@ const UpdateHotel = ({ id, item }: IProps) => {
                     onChange={(e) => setBrandName(e.target.value)}
                   >
                     {data?.brands.length > 0
-                      ? data?.brands.map((item: any) => (
+                      ? data?.brands.map((item: HotelBrand) => (
                           <option value={item.name} key={item.id}>
                             {item.name}
                           </option>
