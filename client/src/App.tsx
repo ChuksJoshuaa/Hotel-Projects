@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar, Sidebar, Footer } from "./components";
+import { Navbar, Footer } from "./components";
 import {
   Login,
   Home,
