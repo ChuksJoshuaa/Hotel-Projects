@@ -1,12 +1,12 @@
 import React from "react";
 import { ME } from "../queries/me";
-import { useQuery } from "@apollo/client";
 import { FaUser } from "react-icons/fa";
 import { useMutation } from "@apollo/client";
 import { LOGOUT } from "../mutations/logout";
 import { Link, useNavigate } from "react-router-dom";
 import { GET_HOTELS } from "../queries/hotels";
 import { GET_HOTEL_BRANDS } from "../queries/brands";
+import { image } from "../utils/image";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -30,8 +30,6 @@ const Navbar = () => {
     navigate("/");
   };
 
-  const image =
-    "https://res.cloudinary.com/chuksmbanaso/image/upload/v1639569930/media/User/images/dhotel_uaybwg.jpg";
   return (
     <nav className="navbar bg-light mb-4 p-0">
       <div className="container d-flex justify-content-between">
