@@ -21,7 +21,7 @@ export interface HotelBrand {
   updatedAt: string;
 }
 
-export interface Hotel {
+export interface HotelProps {
   id: number;
   name: string;
   description: string;

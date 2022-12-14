@@ -3,6 +3,7 @@ import { useQuery } from "@apollo/client";
 import { GET_HOTELS } from "../queries/hotels";
 import { Link } from "react-router-dom";
 import { FaChurch } from "react-icons/fa";
+import { HotelProps } from "../utils/dataTypes";
 
 const Hotel = () => {
   const { data } = useQuery(GET_HOTELS);
@@ -27,7 +28,7 @@ const Hotel = () => {
       {data?.hotels.length > 0 ? (
         <div>
           <div className="row">
-            {data?.hotels.map((item: any) => (
+            {data?.hotels.map((item: HotelProps) => (
               <div className="col-sm-6" key={item.id}>
                 <div className="card mb-3">
                   <div className="card-body">
