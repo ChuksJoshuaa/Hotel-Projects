@@ -4,16 +4,14 @@ import { Link, useParams } from "react-router-dom";
 import { UpdateBrand } from "../components";
 import { SINGLE_BRAND } from "../queries/singleBrand";
 
-interface IProps {}
-
-const SingleBrand: React.FC<IProps> = ({}) => {
+const SingleBrand = ({}) => {
   const { id } = useParams();
 
-  let brandId: string | any = id;
-  brandId = Number(brandId);
+  const brandId: string | undefined = id;
+  const newBrandId = Number(brandId);
 
   const { data, loading, error } = useQuery(SINGLE_BRAND, {
-    variables: { id: brandId },
+    variables: { id: newBrandId },
   });
 
   return (

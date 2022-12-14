@@ -13,17 +13,17 @@ const SingleHotel = () => {
 
   const [deleteHotel] = useMutation(DELETE_HOTEL);
 
-  let hotelId: string | any = id;
-  hotelId = Number(hotelId);
+  let hotelId: string | undefined = id;
+  const newHotelId = Number(hotelId);
 
   const { data, loading, error } = useQuery(SINGLE_HOTEL, {
-    variables: { id: hotelId },
+    variables: { id: newHotelId },
   });
 
-  const DeleteHotel = (id: any) => {
-    let hotelId = parseInt(id);
+  const DeleteHotel = (id: string) => {
+    let newHotelId = parseInt(id);
     deleteHotel({
-      variables: { id: hotelId },
+      variables: { id: newHotelId },
       onCompleted: () => navigate("/"),
       refetchQueries: [{ query: GET_HOTELS }],
     });
