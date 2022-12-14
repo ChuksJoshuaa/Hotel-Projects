@@ -4,7 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { UpdateBrand } from "../components";
 import { SINGLE_BRAND } from "../queries/singleBrand";
 
-const SingleBrand = ({}) => {
+const SingleBrand = () => {
   const { id } = useParams();
 
   const brandId: string | undefined = id;
