@@ -30,7 +30,16 @@ const UpdateHotel = ({ id, item }: IProps) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (name === "") {
+    if (
+      name === "" ||
+      description === "" ||
+      image === "" ||
+      price === "" ||
+      city === "" ||
+      address === "" ||
+      country === "" ||
+      brandName === ""
+    ) {
       return alert("Please fill in the field");
     }
 
