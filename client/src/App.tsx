@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar, Sidebar, Footer } from "./components";
+import { Navbar, Footer } from "./components";
 import {
   Login,
   Home,
@@ -13,6 +13,7 @@ import {
 } from "./pages";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
+import { serverRoute } from "./utils/serverRoute";
 
 const cache = new InMemoryCache({
   typePolicies: {
@@ -33,8 +34,10 @@ const cache = new InMemoryCache({
   },
 });
 
+const Url = serverRoute(process.env.REACT_APP_NODE_ENV as string);
+
 const client = new ApolloClient({
-  uri: "https://hotel-projects-1t6y-f8yn1d3k4-chuksjoshuaa-gmailcom.vercel.app/graphql",
+  uri: Url,
   cache,
   credentials: "include",
 });

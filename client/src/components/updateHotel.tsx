@@ -6,10 +6,11 @@ import { useMutation, useQuery } from "@apollo/client";
 import { SINGLE_HOTEL } from "../queries/singleHotel";
 import { useNavigate } from "react-router-dom";
 import { GET_HOTEL_BRANDS } from "../queries/brands";
+import { HotelBrand, HotelProps } from "../utils/dataTypes";
 
 interface IProps {
   id: string;
-  item: any;
+  item: HotelProps;
 }
 
 const UpdateHotel = ({ id, item }: IProps) => {
@@ -19,7 +20,7 @@ const UpdateHotel = ({ id, item }: IProps) => {
   const [city, setCity] = useState(item.city);
   const [country, setCountry] = useState(item.country);
   const [image, setImage] = useState(item.image);
-  const [price, setPrice] = useState(item.price);
+  const [price, setPrice] = useState<any>(item.price);
   const [brandName, setBrandName] = useState(item.brandName);
   const navigate = useNavigate();
   const { data } = useQuery(GET_HOTEL_BRANDS);
@@ -29,7 +30,16 @@ const UpdateHotel = ({ id, item }: IProps) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (name === "") {
+    if (
+      name === "" ||
+      description === "" ||
+      image === "" ||
+      price === "" ||
+      city === "" ||
+      address === "" ||
+      country === "" ||
+      brandName === ""
+    ) {
       return alert("Please fill in the field");
     }
 
@@ -41,7 +51,7 @@ const UpdateHotel = ({ id, item }: IProps) => {
         name: name,
         description: description,
         address: address,
-        price: price,
+        price: parseInt(price),
         city: city,
         country: country,
         brandName: brandName,
@@ -176,7 +186,7 @@ const UpdateHotel = ({ id, item }: IProps) => {
                     onChange={(e) => setBrandName(e.target.value)}
                   >
                     {data?.brands.length > 0
-                      ? data?.brands.map((item: any) => (
+                      ? data?.brands.map((item: HotelBrand) => (
                           <option value={item.name} key={item.id}>
                             {item.name}
                           </option>
