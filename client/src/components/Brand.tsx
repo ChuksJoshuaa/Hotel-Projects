@@ -4,6 +4,7 @@ import { FaBlogger, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { DELETE_HOTEL_BRAND } from "../mutations/deleteBrand";
 import { GET_HOTEL_BRANDS } from "../queries/brands";
+import { HotelBrand } from "../utils/dataTypes";
 
 interface IProps {}
 
@@ -17,10 +18,11 @@ const Brand: React.FC<IProps> = () => {
     let brandId = parseInt(id);
     deleteBrand({
       variables: { id: brandId },
-
       refetchQueries: [{ query: GET_HOTEL_BRANDS }],
     });
   };
+
+  console.log(data);
 
   return (
     <div>
@@ -40,7 +42,7 @@ const Brand: React.FC<IProps> = () => {
       <div>
         {data?.brands.length > 0 ? (
           <div className="row mt-1">
-            {data?.brands.map((item: any) => (
+            {data?.brands.map((item: HotelBrand) => (
               <div className="col-md-4" key={item.id}>
                 <div className="card mb-3">
                   <div className="card-body shadow">
