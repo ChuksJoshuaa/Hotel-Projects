@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { FaUser } from "react-icons/fa";
 // import { useRegisterMutation, MeQuery, MeDocument } from "../generated/graphql";
 import { useMutation } from "@apollo/client";
 import { REGISTER } from "../mutations/register";
