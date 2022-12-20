@@ -166,7 +166,6 @@ code {
   -ms-flex-pack: center;
   justify-content: center;
   min-height: 50vh;
-  /* background-color: #ededed; */
 }
 
 .loader {
