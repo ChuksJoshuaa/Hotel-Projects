@@ -4,10 +4,12 @@ import { FaBlogger, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { DELETE_HOTEL_BRAND } from "../mutations/deleteBrand";
 import { GET_HOTEL_BRANDS } from "../queries/brands";
+import { GET_HOTELS } from "../queries/hotels";
 import { HotelBrand } from "../utils/dataTypes";
 
 const Brand = () => {
   const { data } = useQuery(GET_HOTEL_BRANDS);
+  const { data: dataa } = useQuery(GET_HOTELS);
   const user = JSON.parse(localStorage.getItem("profile") || "{}");
   const checkUser = Object.keys(user).length;
   const [deleteBrand] = useMutation(DELETE_HOTEL_BRAND);
@@ -19,6 +21,15 @@ const Brand = () => {
       refetchQueries: [{ query: GET_HOTEL_BRANDS }],
     });
   };
+
+  if (
+    dataa?.hotels?.length === 0 ||
+    !dataa ||
+    !data ||
+    data?.brands?.length === 0
+  ) {
+    return null;
+  }
 
   return (
     <div>
@@ -67,9 +78,7 @@ const Brand = () => {
               </div>
             ))}
           </div>
-        ) : (
-          <p>No Hotel Brands available...</p>
-        )}
+        ) : null}
       </div>
     </div>
   );
