@@ -6,15 +6,13 @@ import { DELETE_HOTEL_BRAND } from "../mutations/deleteBrand";
 import { GET_HOTEL_BRANDS } from "../queries/brands";
 import { HotelBrand } from "../utils/dataTypes";
 
-interface IProps {}
-
-const Brand: React.FC<IProps> = () => {
+const Brand = () => {
   const { data } = useQuery(GET_HOTEL_BRANDS);
   const user = JSON.parse(localStorage.getItem("profile") || "{}");
   const checkUser = Object.keys(user).length;
   const [deleteBrand] = useMutation(DELETE_HOTEL_BRAND);
 
-  const DeleteBrand = (id: any) => {
+  const DeleteBrand = (id: string) => {
     let brandId = parseInt(id);
     deleteBrand({
       variables: { id: brandId },
@@ -70,7 +68,7 @@ const Brand: React.FC<IProps> = () => {
             ))}
           </div>
         ) : (
-          <p>No Hotel Brands available</p>
+          <p>No Hotel Brands available...</p>
         )}
       </div>
     </div>

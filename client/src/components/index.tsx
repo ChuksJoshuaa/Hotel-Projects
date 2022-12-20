@@ -7,6 +7,7 @@ import Hero from "./Hero";
 import UpdateBrand from "./UpdateBrand";
 import UpdateHotel from "./updateHotel";
 import Footer from "./Footer";
+import HotelLoader from "./HotelLoader";
 
 export {
   Navbar,
@@ -18,4 +19,5 @@ export {
   UpdateBrand,
   UpdateHotel,
   Footer,
+  HotelLoader,
 };
