@@ -70,7 +70,7 @@ const Brand: React.FC<IProps> = () => {
             ))}
           </div>
         ) : (
-          <p>No Hotel Brands available</p>
+          <p>No Hotel Brands available...</p>
         )}
       </div>
     </div>
