@@ -14,7 +14,7 @@ const Brand: React.FC<IProps> = () => {
   const checkUser = Object.keys(user).length;
   const [deleteBrand] = useMutation(DELETE_HOTEL_BRAND);
 
-  const DeleteBrand = (id: any) => {
+  const DeleteBrand = (id: string) => {
     let brandId = parseInt(id);
     deleteBrand({
       variables: { id: brandId },
