@@ -15,7 +15,7 @@ const Hotel = () => {
   if (error) {
     return (
       <div className="container mt-3">
-        <h6 className="text-center fs-1 loading">Something is wrong!!!!</h6>
+        <h6 className="text-center fs-5 loading">Something is wrong!!!!</h6>
       </div>
     );
   }
