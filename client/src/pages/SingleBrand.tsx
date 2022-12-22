@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import React from "react";
 import { Link, useParams } from "react-router-dom";
-import { UpdateBrand } from "../components";
+import { UpdateBrand, HotelLoader } from "../components";
 import { SINGLE_BRAND } from "../queries/singleBrand";
 
 const SingleBrand = () => {
@@ -13,6 +13,17 @@ const SingleBrand = () => {
   const { data, loading, error } = useQuery(SINGLE_BRAND, {
     variables: { id: newBrandId },
   });
+
+  if (!data?.brand || !data) {
+    return (
+      <>
+        <div className="text-center font-weight-semibold fs-5 mb-0 loading">
+          Please wait...
+        </div>
+        <HotelLoader />
+      </>
+    );
+  }
 
   return (
     <div>

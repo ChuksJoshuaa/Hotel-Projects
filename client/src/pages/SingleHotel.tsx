@@ -2,7 +2,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import React from "react";
 import { FaTrash } from "react-icons/fa";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { UpdateHotel } from "../components";
+import { UpdateHotel, HotelLoader } from "../components";
 import { DELETE_HOTEL } from "../mutations/deleteHotel";
 import { GET_HOTELS } from "../queries/hotels";
 import { SINGLE_HOTEL } from "../queries/singleHotel";
@@ -28,6 +28,17 @@ const SingleHotel = () => {
       refetchQueries: [{ query: GET_HOTELS }],
     });
   };
+
+  if (!data?.hotel || !data) {
+    return (
+      <>
+        <div className="text-center font-weight-semibold fs-5 mb-0 loading">
+          Please wait...
+        </div>
+        <HotelLoader />
+      </>
+    );
+  }
 
   return (
     <div>
