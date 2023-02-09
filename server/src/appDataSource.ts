@@ -13,6 +13,7 @@ export const dataSource = new DataSource({
   type: "postgres",
   url: process.env.DATABASE_URL,
   port: portNumber,
+  ssl: __prod__ ? true : false,
   synchronize: !__prod__,
   entities: [Hotel, HotelBrand, User],
   logging: !__prod__,
